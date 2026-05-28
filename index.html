@@ -40,12 +40,92 @@
       color: var(--green);
       user-select: none;
     }
+
+    #loading-screen {
+      position: fixed; inset: 0;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease;
+    }
+    #loading-screen.hidden { opacity: 0; pointer-events: none; }
+    #loading-matrix { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .loading-content {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      font-family: var(--font-mono);
+    }
+    .loading-text { font-size: 22px; font-weight: 700; color: var(--green); text-shadow: 0 0 20px var(--green); letter-spacing: 3px; }
+    .loading-bar { width: 380px; height: 28px; border: 2px solid var(--green); background: transparent; overflow: hidden; box-shadow: 0 0 12px rgba(0,255,65,0.3); }
+    .loading-fill { height: 100%; width: 0%; background: var(--green); transition: width 0.3s ease; box-shadow: 0 0 20px var(--green); }
+    .loading-status { font-size: 11px; color: rgba(0,255,65,0.7); letter-spacing: 1px; }
   </style>
 </head>
 <body>
-  <p style="color:#00FF41;font-family:monospace;padding:20px;">scaffold ok</p>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <canvas id="loading-matrix"></canvas>
+    <div class="loading-content">
+      <div class="loading-text">SOMEONE IS CURIOUS...</div>
+      <div class="loading-bar"><div class="loading-fill" id="loading-fill"></div></div>
+      <div class="loading-status" id="loading-status">Initializing system...</div>
+    </div>
+  </div>
   <script>
-    console.log('RajvanshOS booting...');
+    // ── Loading Screen ──
+    const loadingCanvas = document.getElementById('loading-matrix');
+    const lCtx = loadingCanvas.getContext('2d');
+    function resizeLoadingCanvas() {
+      loadingCanvas.width = window.innerWidth;
+      loadingCanvas.height = window.innerHeight;
+    }
+    resizeLoadingCanvas();
+    window.addEventListener('resize', resizeLoadingCanvas);
+
+    const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+    const fontSize = 14;
+    let lDrops = [];
+    function initLoadingDrops() {
+      const cols = Math.floor(loadingCanvas.width / fontSize);
+      lDrops = Array(cols).fill(1);
+    }
+    initLoadingDrops();
+
+    function drawLoadingMatrix() {
+      lCtx.fillStyle = 'rgba(0,0,0,0.05)';
+      lCtx.fillRect(0, 0, loadingCanvas.width, loadingCanvas.height);
+      lCtx.fillStyle = '#00FF41';
+      lCtx.font = fontSize + 'px monospace';
+      lDrops.forEach((y, i) => {
+        lCtx.fillText(matrixChars[Math.floor(Math.random() * matrixChars.length)], i * fontSize, y * fontSize);
+        if (y * fontSize > loadingCanvas.height && Math.random() > 0.975) lDrops[i] = 0;
+        lDrops[i]++;
+      });
+    }
+    const loadingMatrixInterval = setInterval(drawLoadingMatrix, 45);
+
+    const loadingMessages = [
+      'Initializing system...',
+      'Loading neural networks...',
+      'Caffeinating AI models...',
+      'Compiling achievements...',
+      'System ready.'
+    ];
+    let loadPct = 0;
+    const loadInterval = setInterval(() => {
+      loadPct = Math.min(loadPct + Math.random() * 22, 100);
+      document.getElementById('loading-fill').style.width = loadPct + '%';
+      const idx = Math.min(Math.floor((loadPct / 100) * loadingMessages.length), loadingMessages.length - 1);
+      document.getElementById('loading-status').textContent = loadingMessages[idx];
+      if (loadPct >= 100) {
+        clearInterval(loadInterval);
+        clearInterval(loadingMatrixInterval);
+        setTimeout(() => {
+          document.getElementById('loading-screen').classList.add('hidden');
+          setTimeout(() => document.getElementById('loading-screen').remove(), 900);
+        }, 600);
+      }
+    }, 280);
   </script>
 </body>
 </html>
