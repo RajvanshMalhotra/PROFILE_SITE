@@ -59,9 +59,42 @@
     .loading-bar { width: 380px; height: 28px; border: 2px solid var(--green); background: transparent; overflow: hidden; box-shadow: 0 0 12px rgba(0,255,65,0.3); }
     .loading-fill { height: 100%; width: 0%; background: var(--green); transition: width 0.3s ease; box-shadow: 0 0 20px var(--green); }
     .loading-status { font-size: 11px; color: rgba(0,255,65,0.7); letter-spacing: 1px; }
+
+    #menubar {
+      position: fixed; top: 0; left: 0; right: 0; height: 26px;
+      background: var(--menubar-bg);
+      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px; z-index: 5000;
+      font-family: var(--font-ui); font-size: 12px; color: rgba(255,255,255,0.88);
+    }
+    .menubar-left, .menubar-right { display: flex; align-items: center; gap: 16px; }
+    .menu-apple { font-size: 15px; cursor: default; }
+    .menu-app { font-weight: 600; }
+    .menu-item { cursor: default; opacity: 0.85; padding: 1px 7px; border-radius: 4px; transition: background 0.12s; }
+    .menu-item:hover { opacity: 1; background: rgba(255,255,255,0.12); }
+    .menu-icon { font-size: 13px; opacity: 0.75; }
+    #menubar-clock { font-size: 12px; font-family: var(--font-ui); white-space: nowrap; }
   </style>
 </head>
 <body>
+  <div id="menubar">
+    <div class="menubar-left">
+      <span class="menu-apple">&#63743;</span>
+      <span class="menu-app">Finder</span>
+      <span class="menu-item">File</span>
+      <span class="menu-item">Edit</span>
+      <span class="menu-item">View</span>
+      <span class="menu-item">Go</span>
+      <span class="menu-item">Window</span>
+    </div>
+    <div class="menubar-right">
+      <span class="menu-icon">&#8999;</span>
+      <span class="menu-icon">&#9654;</span>
+      <span id="menubar-clock"></span>
+    </div>
+  </div>
   <!-- Loading Screen -->
   <div id="loading-screen">
     <canvas id="loading-matrix"></canvas>
@@ -126,6 +159,15 @@
         }, 600);
       }
     }, 280);
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('menubar-clock').textContent = now.toLocaleDateString('en-US', {
+        weekday: 'short', month: 'short', day: 'numeric'
+      }) + '  ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
   </script>
 </body>
 </html>
