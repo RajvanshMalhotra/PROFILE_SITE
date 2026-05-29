@@ -98,6 +98,46 @@
       text-shadow: 0 1px 4px rgba(0,0,0,1), 0 0 8px rgba(0,0,0,0.9);
       word-break: break-word; line-height: 1.25; max-width: 70px;
     }
+
+    .win {
+      position: fixed; width: 680px; height: 520px;
+      min-width: 480px; min-height: 340px; max-width: 92vw; max-height: 85vh;
+      background: var(--bg); border-radius: var(--radius-md) var(--radius-md) 8px 8px;
+      box-shadow: var(--shadow-win); border: 1px solid rgba(255,255,255,0.07);
+      display: none; flex-direction: column; z-index: 100; overflow: hidden;
+      transform-origin: center center; transition: box-shadow 0.15s ease;
+    }
+    .win.open { display: flex; animation: winOpen 0.18s ease-out forwards; }
+    .win:focus-within { box-shadow: var(--shadow-win), 0 0 0 1px rgba(0,255,65,0.12); }
+    @keyframes winOpen { from{opacity:0;transform:scale(0.93)} to{opacity:1;transform:scale(1)} }
+    .win-titlebar {
+      height: 34px;
+      background: linear-gradient(180deg, #2a2a2e 0%, #1c1c1e 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; padding: 0 10px; gap: 8px;
+      cursor: move; flex-shrink: 0;
+    }
+    .win-controls { display: flex; gap: 6px; align-items: center; }
+    .win-btn { width: 12px; height: 12px; border-radius: 50%; cursor: pointer; border: none; outline: none; transition: filter 0.15s; position: relative; }
+    .win-btn:hover { filter: brightness(1.3); }
+    .win-btn.close { background: #FF5F57; }
+    .win-btn.min   { background: #FFBD2E; }
+    .win-btn.max   { background: #28C940; }
+    .win-btn.close::after { content:'×'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:9px; color:rgba(0,0,0,0.6); opacity:0; }
+    .win-btn.min::after   { content:'−'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:9px; color:rgba(0,0,0,0.6); opacity:0; }
+    .win-btn.max::after   { content:'+'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:9px; color:rgba(0,0,0,0.6); opacity:0; }
+    .win-controls:hover .win-btn::after { opacity: 1; }
+    .win-title { font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.75); flex: 1; text-align: center; }
+    .win-body {
+      flex: 1; overflow-y: auto; overflow-x: hidden; padding: 18px 20px;
+      background: var(--bg); color: var(--green);
+      font-family: var(--font-mono); font-size: 12px; line-height: 1.75; scroll-behavior: smooth;
+      scrollbar-width: thin; scrollbar-color: var(--surface2) transparent;
+    }
+    .win-body::-webkit-scrollbar { width: 6px; }
+    .win-body::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+    .win-resize { position: absolute; bottom: 0; right: 0; width: 14px; height: 14px; cursor: se-resize; background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.08) 50%); }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 10%,30%,50%,70%,90%{transform:translateX(-8px)} 20%,40%,60%,80%{transform:translateX(8px)} }
   </style>
 </head>
 <body>
@@ -126,6 +166,13 @@
     <div class="desktop-icon" data-target="contact"><div class="icon-img">&#128193;</div><div class="icon-label">Contact</div></div>
     <div class="desktop-icon" data-target="resume"><div class="icon-img">&#128196;</div><div class="icon-label">Resume.pdf</div></div>
   </div>
+  <div class="win" id="win-about"        data-title="📁 About.me"       style="left:15%;top:12%"></div>
+  <div class="win" id="win-projects"     data-title="📁 Projects"        style="left:18%;top:10%"></div>
+  <div class="win" id="win-experience"   data-title="📁 Experience"      style="left:20%;top:14%"></div>
+  <div class="win" id="win-achievements" data-title="📁 Achievements"    style="left:22%;top:11%"></div>
+  <div class="win" id="win-skills"       data-title="📁 Skills"          style="left:24%;top:13%"></div>
+  <div class="win" id="win-contact"      data-title="📁 Contact"         style="left:16%;top:15%"></div>
+  <div class="win" id="win-terminal"     data-title="💻 Terminal — rajvansh@mainframe: ~/desktop" style="left:10%;top:8%"></div>
   <!-- Loading Screen -->
   <div id="loading-screen">
     <canvas id="loading-matrix"></canvas>
@@ -210,7 +257,105 @@
         selectedIcon.classList.remove('selected'); selectedIcon = null;
       }
     });
-    function openWindow(id) { console.log('open stub:', id); }
+    let zTop = 200;
+
+    function buildWindow(id) {
+      const el = document.getElementById('win-' + id);
+      if (!el) return;
+      if (el.querySelector('.win-titlebar')) return;
+      const title = el.dataset.title || id;
+      el.innerHTML = `
+        <div class="win-titlebar">
+          <div class="win-controls">
+            <button class="win-btn close" onclick="closeWindow('${id}')"></button>
+            <button class="win-btn min"   onclick="minimiseWindow('${id}')"></button>
+            <button class="win-btn max"   onclick="maximiseWindow('${id}')"></button>
+          </div>
+          <div class="win-title">${title}</div>
+        </div>
+        <div class="win-body" id="wbody-${id}"></div>
+        <div class="win-resize"></div>
+      `;
+      makeDraggable(el);
+      makeResizable(el);
+      if (id === 'terminal') setTimeout(() => buildTerminalBody(el), 0);
+    }
+
+    function openWindow(id) {
+      buildWindow(id);
+      const el = document.getElementById('win-' + id);
+      if (!el) return;
+      el.classList.add('open');
+      bringToFront(el);
+      const pos = {about:['15%','12%'],projects:['18%','10%'],experience:['20%','14%'],achievements:['22%','11%'],skills:['24%','13%'],contact:['16%','15%'],terminal:['10%','8%']};
+      if (pos[id] && !el.dataset.positioned) { el.style.left=pos[id][0]; el.style.top=pos[id][1]; el.dataset.positioned='1'; }
+      populateWindow(id);
+      updateDockDot(id, true);
+    }
+
+    function closeWindow(id) {
+      const el = document.getElementById('win-' + id);
+      if (el) { el.classList.remove('open'); el.removeAttribute('data-minimised'); }
+      updateDockDot(id, false);
+    }
+
+    function minimiseWindow(id) {
+      const el = document.getElementById('win-' + id);
+      if (!el) return;
+      el.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+      el.style.transform = 'scale(0.1) translateY(400px)';
+      el.style.opacity = '0';
+      setTimeout(() => {
+        el.classList.remove('open'); el.style.transform=''; el.style.opacity=''; el.style.transition=''; el.dataset.minimised='1';
+      }, 200);
+    }
+
+    function maximiseWindow(id) {
+      const el = document.getElementById('win-' + id);
+      if (!el) return;
+      if (el.dataset.maximised) {
+        el.style.left=el.dataset.prevLeft; el.style.top=el.dataset.prevTop;
+        el.style.width=el.dataset.prevW; el.style.height=el.dataset.prevH;
+        delete el.dataset.maximised;
+      } else {
+        el.dataset.prevLeft=el.style.left; el.dataset.prevTop=el.style.top;
+        el.dataset.prevW=el.style.width; el.dataset.prevH=el.style.height;
+        el.style.left='0'; el.style.top='26px'; el.style.width='100vw'; el.style.height='calc(100vh - 104px)';
+        el.dataset.maximised='1';
+      }
+    }
+
+    function bringToFront(el) { zTop++; el.style.zIndex = zTop; }
+    document.querySelectorAll('.win').forEach(w => w.addEventListener('mousedown', () => bringToFront(w)));
+    function updateDockDot(id, active) {}
+    function populateWindow(id) {}
+
+    function makeDraggable(el) {
+      const tb = el.querySelector('.win-titlebar');
+      let ox=0, oy=0;
+      tb.addEventListener('mousedown', e => {
+        if (e.target.classList.contains('win-btn')) return;
+        ox=e.clientX-el.offsetLeft; oy=e.clientY-el.offsetTop; bringToFront(el);
+        const onMove = e => {
+          el.style.left = Math.max(0, Math.min(window.innerWidth-el.offsetWidth, e.clientX-ox))+'px';
+          el.style.top  = Math.max(26, Math.min(window.innerHeight-el.offsetHeight, e.clientY-oy))+'px';
+        };
+        const onUp = () => { document.removeEventListener('mousemove',onMove); document.removeEventListener('mouseup',onUp); };
+        document.addEventListener('mousemove',onMove); document.addEventListener('mouseup',onUp); e.preventDefault();
+      });
+    }
+
+    function makeResizable(el) {
+      const h = el.querySelector('.win-resize');
+      h.addEventListener('mousedown', e => {
+        const sx=e.clientX, sy=e.clientY, sw=el.offsetWidth, sh=el.offsetHeight;
+        const onMove = e => { el.style.width=Math.max(480,sw+e.clientX-sx)+'px'; el.style.height=Math.max(340,sh+e.clientY-sy)+'px'; };
+        const onUp = () => { document.removeEventListener('mousemove',onMove); document.removeEventListener('mouseup',onUp); };
+        document.addEventListener('mousemove',onMove); document.addEventListener('mouseup',onUp); e.preventDefault();
+      });
+    }
+
+    function buildTerminalBody(el) {}
 
     function updateClock() {
       const now = new Date();
