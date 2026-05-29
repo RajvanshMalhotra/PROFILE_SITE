@@ -76,6 +76,28 @@
     .menu-item:hover { opacity: 1; background: rgba(255,255,255,0.12); }
     .menu-icon { font-size: 13px; opacity: 0.75; }
     #menubar-clock { font-size: 12px; font-family: var(--font-ui); white-space: nowrap; }
+
+    #desktop {
+      position: fixed; top: 26px; left: 0; right: 0; bottom: 78px;
+      background: url('./assets/wallp.jpg') no-repeat center center / cover;
+      display: flex; flex-direction: column; align-items: flex-start;
+      padding: 20px 14px; gap: 12px; overflow: hidden;
+    }
+    .desktop-icon {
+      width: 72px; min-height: 80px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 5px; padding: 6px 4px; border-radius: var(--radius-sm);
+      cursor: pointer; transition: background 0.15s; text-align: center;
+    }
+    .desktop-icon:hover { background: rgba(255,255,255,0.12); }
+    .desktop-icon.selected { background: rgba(0,212,255,0.25); outline: 1px dashed rgba(255,255,255,0.5); animation: iconPulse 0.3s ease; }
+    @keyframes iconPulse { 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
+    .icon-img { font-size: 44px; line-height: 1; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6)); }
+    .icon-label {
+      font-size: 10px; font-family: var(--font-ui); font-weight: 500; color: #fff;
+      text-shadow: 0 1px 4px rgba(0,0,0,1), 0 0 8px rgba(0,0,0,0.9);
+      word-break: break-word; line-height: 1.25; max-width: 70px;
+    }
   </style>
 </head>
 <body>
@@ -94,6 +116,15 @@
       <span class="menu-icon">&#9654;</span>
       <span id="menubar-clock"></span>
     </div>
+  </div>
+  <div id="desktop">
+    <div class="desktop-icon" data-target="about"><div class="icon-img">&#128193;</div><div class="icon-label">About.me</div></div>
+    <div class="desktop-icon" data-target="projects"><div class="icon-img">&#128193;</div><div class="icon-label">Projects</div></div>
+    <div class="desktop-icon" data-target="experience"><div class="icon-img">&#128193;</div><div class="icon-label">Experience</div></div>
+    <div class="desktop-icon" data-target="achievements"><div class="icon-img">&#128193;</div><div class="icon-label">Achievements</div></div>
+    <div class="desktop-icon" data-target="skills"><div class="icon-img">&#128193;</div><div class="icon-label">Skills</div></div>
+    <div class="desktop-icon" data-target="contact"><div class="icon-img">&#128193;</div><div class="icon-label">Contact</div></div>
+    <div class="desktop-icon" data-target="resume"><div class="icon-img">&#128196;</div><div class="icon-label">Resume.pdf</div></div>
   </div>
   <!-- Loading Screen -->
   <div id="loading-screen">
@@ -159,6 +190,27 @@
         }, 600);
       }
     }, 280);
+
+    let selectedIcon = null;
+    document.querySelectorAll('.desktop-icon').forEach(icon => {
+      icon.addEventListener('click', e => {
+        e.stopPropagation();
+        if (selectedIcon) selectedIcon.classList.remove('selected');
+        icon.classList.add('selected');
+        selectedIcon = icon;
+      });
+      icon.addEventListener('dblclick', () => {
+        const target = icon.dataset.target;
+        if (target === 'resume') { window.open('./assets/resume.pdf', '_blank'); }
+        else { openWindow(target); }
+      });
+    });
+    document.getElementById('desktop').addEventListener('click', e => {
+      if (e.target === e.currentTarget && selectedIcon) {
+        selectedIcon.classList.remove('selected'); selectedIcon = null;
+      }
+    });
+    function openWindow(id) { console.log('open stub:', id); }
 
     function updateClock() {
       const now = new Date();
