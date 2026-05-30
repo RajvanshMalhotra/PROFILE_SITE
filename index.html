@@ -152,6 +152,27 @@
     .cli-link:hover { background: var(--green); color: #000; box-shadow: 0 0 12px rgba(0,255,65,0.4); }
     .cli-contact-link { display: inline-block; padding: 10px 20px; margin: 8px 8px 8px 0; border: 2px solid var(--green); background: rgba(0,255,65,0.08); color: var(--green); text-decoration: none; font-family: var(--font-mono); font-size: 12px; transition: var(--transition); border-radius: 4px; }
     .cli-contact-link:hover { background: var(--pink); border-color: var(--pink); color: #000; box-shadow: 0 0 14px rgba(255,0,102,0.5); }
+
+    #dock {
+      position: fixed; bottom: 8px; left: 50%; transform: translateX(-50%);
+      height: 62px; background: var(--dock-bg);
+      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg);
+      padding: 6px 12px; display: flex; align-items: flex-end; gap: 4px; z-index: 4000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    #dock::before { content:''; position:absolute; top:0; left:10%; right:10%; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent); border-radius:50%; }
+    .dock-item { display:flex; flex-direction:column; align-items:center; position:relative; cursor:pointer; transition:transform 0.15s ease; }
+    .dock-item:hover { transform: translateY(-10px); }
+    .dock-item:hover .dock-icon { font-size: 46px; }
+    .dock-icon { font-size:36px; line-height:1; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5)); transition:font-size 0.15s ease; }
+    .dock-dot { width:4px; height:4px; border-radius:50%; background:transparent; margin-top:2px; transition:background 0.2s; }
+    .dock-dot.active { background:var(--green); box-shadow:0 0 4px var(--green); }
+    .dock-separator { width:1px; height:36px; margin:0 4px; background:rgba(255,255,255,0.15); align-self:center; }
+    .dock-item::before { content:attr(data-tip); position:absolute; bottom:70px; background:rgba(20,20,20,0.92); color:#fff; font-family:var(--font-ui); font-size:11px; font-weight:500; padding:3px 8px; border-radius:5px; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity 0.15s; border:1px solid rgba(255,255,255,0.1); }
+    .dock-item:hover::before { opacity:1; }
+    @keyframes dockBounce { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-18px)} 60%{transform:translateY(-8px)} }
+    .dock-item.bouncing { animation:dockBounce 0.55s ease; }
   </style>
 </head>
 <body>
@@ -341,7 +362,6 @@
 
     function bringToFront(el) { zTop++; el.style.zIndex = zTop; }
     document.querySelectorAll('.win').forEach(w => w.addEventListener('mousedown', () => bringToFront(w)));
-    function updateDockDot(id, active) {}
 
     const windowContent = {
       about: `<div class="cli-prompt">┌─[rajvansh@mainframe]─[~/about]<br>└──╼ $ <span class="cli-cmd">cat intro.txt</span></div><div class="cli-output"><div>&gt; <span class="cli-tag cyan">Rajvansh Malhotra</span></div><div>&gt; B.Tech Computer Engineering — NIT Kurukshetra (Aug 2023 – Jun 2027)</div><div>&gt; ML Engineer | AGI Researcher | Builder</div><br><div>&gt; Currently: scalable agentic AI + efficient LLM fine-tuning</div><br><div class="cli-prompt">└──╼ $ <span class="cli-cmd">cat philosophy.txt</span></div><div style="margin-top:8px;line-height:2.1;color:#ccc;">&gt; &quot;किसी चीज़ को शिद्दत से चाहो तो पूरी कायनात<br>&nbsp;&nbsp;&nbsp;तुम्हें उससे मिलाने में लग जाती है&quot;<br><br>&gt; Translation: When you want something badly enough,<br>&nbsp;&nbsp;the entire universe conspires to help you achieve it.<br><br>&gt; Mission: Learning and implementing.</div></div>`,
@@ -398,6 +418,35 @@
     }
     setInterval(updateClock, 1000);
     updateClock();
+
+    document.querySelectorAll('.dock-item').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.add('bouncing');
+        item.addEventListener('animationend', () => item.classList.remove('bouncing'), {once:true});
+        if (item.dataset.url) { window.open(item.dataset.url,'_blank'); return; }
+        const target = item.dataset.target;
+        if (target === 'resume') { window.open('./assets/resume.pdf','_blank'); return; }
+        if (target) {
+          const win = document.getElementById('win-'+target);
+          if (win && win.classList.contains('open') && !win.dataset.minimised) { bringToFront(win); }
+          else { openWindow(target); }
+        }
+      });
+    });
+
+    function updateDockDot(id, active) {
+      const dot = document.getElementById('dot-'+id);
+      if (dot) dot.classList.toggle('active', active);
+    }
   </script>
+  <div id="dock">
+    <div class="dock-item" data-target="about"    data-tip="Finder"><div class="dock-icon">&#128193;</div><div class="dock-dot" id="dot-about"></div></div>
+    <div class="dock-item" data-target="projects"  data-tip="Projects"><div class="dock-icon">&#128640;</div><div class="dock-dot" id="dot-projects"></div></div>
+    <div class="dock-item" data-target="terminal"  data-tip="Terminal"><div class="dock-icon">&#128187;</div><div class="dock-dot" id="dot-terminal"></div></div>
+    <div class="dock-separator"></div>
+    <div class="dock-item" data-target="resume"    data-tip="Resume"><div class="dock-icon">&#11088;</div><div class="dock-dot"></div></div>
+    <div class="dock-item" data-url="https://github.com/RajvanshMalhotra" data-tip="GitHub"><div class="dock-icon">&#128024;</div><div class="dock-dot"></div></div>
+    <div class="dock-item" data-target="contact"   data-tip="Contact"><div class="dock-icon">&#128140;</div><div class="dock-dot" id="dot-contact"></div></div>
+  </div>
 </body>
 </html>
