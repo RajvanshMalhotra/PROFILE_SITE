@@ -481,6 +481,93 @@
     }
 
     function termHandleCommand(main, args, lower, cmd) {
+      if (main==='ls'||main==='dir') {
+        if (['-la','-l','-al'].includes(args[0])) {
+          termPrint('total 7');
+          ['about_me','projects','experience','achievements','skills','contact'].forEach(d=>termPrint(`drwxr-xr-x  2 rajvansh staff 4096 Jun  1 02:38 <span class="t-good">${d}/</span>`));
+          termPrint('-rw-r--r--  1 rajvansh staff 98304 Jun  1 02:38 <span class="t-warn">resume.pdf</span>');
+        } else {
+          termPrint('<span class="t-good">about_me/</span>  <span class="t-good">projects/</span>  <span class="t-good">experience/</span>  <span class="t-good">achievements/</span>  <span class="t-good">skills/</span>  <span class="t-good">contact/</span>  <span class="t-warn">resume.pdf</span>');
+        }
+      } else if (main==='pwd') {
+        termPrint('/home/rajvansh/desktop');
+      } else if (main==='cd') {
+        const dir=args[0];
+        if (!dir||dir==='~'||dir==='~/desktop') { termCwd='~/desktop'; }
+        else if (dir==='..') { termCwd='~/desktop'; termPrint('/home/rajvansh'); }
+        else { termPrint(`<span class="t-err">cd: ${escHtml(dir)}: Directory navigation disabled in web interface</span>`); termPrint(`Tip: type a section name directly (e.g., <span class="t-cmd">projects</span>) to open it.`); }
+      } else if (main==='cat') {
+        const file=args[0]||'';
+        if (!file) { termPrint('<span class="t-err">cat: missing operand</span>'); }
+        else if (file==='resume.pdf'||file==='./assets/resume.pdf') { termPrint('&gt; Opening resume.pdf...'); window.open('./assets/resume.pdf','_blank'); }
+        else if (['intro.txt','philosophy.txt','experience.log','achievements.txt','skills.json'].includes(file)) {
+          const id=file.replace('.txt','').replace('.log','').replace('.json','').replace('intro','about').replace('philosophy','about');
+          openWindow(id); termPrint(`&gt; cat ${escHtml(file)} → opening window...`);
+        } else { termPrint(`<span class="t-err">cat: ${escHtml(file)}: No such file or directory</span>`); }
+      } else if (['touch','mkdir','rm','mv','cp'].includes(main)) {
+        termPrint(`<span class="t-err">${main}: Permission denied — this is a read-only portfolio system.</span>`);
+      } else if (main==='whoami') { termPrint('rajvansh');
+      } else if (main==='hostname') { termPrint('rajvansh-mainframe');
+      } else if (main==='uname') {
+        termPrint(args[0]==='-a' ? 'RajvanshOS 2026.1.0 #1 SMP PREEMPT AGI-class Mon Jun 1 02:38 IST 2026 x86_64 GNU/Linux' : 'Linux');
+      } else if (main==='date') { termPrint(new Date().toString());
+      } else if (main==='uptime') { termPrint('up 3 years, caffeinated, load average: building, shipping, optimizing');
+      } else if (main==='env') {
+        ['PATH=/usr/local/bin:/usr/bin:/usr/sbin','SHELL=/bin/zsh','USER=rajvansh','LLM_MODEL=llama-3-8b-qlora','COFFEE_LEVEL=100%','VIBE=hacker','STATUS=open_to_opportunities'].forEach(l=>termPrint(l));
+      } else if (main==='which') {
+        const p={python3:'/usr/local/bin/python3 (v3.12, torch enabled)',git:'/usr/bin/git',docker:'/usr/local/bin/docker',node:'node: not found — Python shop'};
+        termPrint(p[args[0]]||`${escHtml(args[0]||'')}: not found`);
+      } else if (main==='echo') { termPrint(escHtml(args.join(' ')));
+      } else if (main==='man') {
+        if (args[0]==='rajvansh') {
+          termPrint('<br><span class="t-cmd">RAJVANSH(1)           User Commands           RAJVANSH(1)</span>');
+          termPrint('<br><strong>NAME</strong>'); termPrint('    rajvansh — ML Engineer, AGI Researcher, Builder');
+          termPrint('<br><strong>SYNOPSIS</strong>'); termPrint('    rajvansh [--build] [--optimize] [--deploy] [--hire]');
+          termPrint('<br><strong>DESCRIPTION</strong>'); termPrint('    Rajvansh reduces latency, ships agents, and fine-tunes LLMs.'); termPrint('    Known to reduce voice AI latency by 93% in a single hackathon.');
+          termPrint('<br><strong>OPTIONS</strong>'); termPrint('    --hire        Returns 200 OK immediately.'); termPrint('    --optimize    Will find the bottleneck. Will eliminate it.'); termPrint('    --deploy      Containerised. CI/CD included. No manual steps.');
+          termPrint('<br><strong>EXIT STATUS</strong>'); termPrint('    0 on hire. 1 on competitor getting there first.');
+        } else { termPrint(`<span class="t-err">No manual entry for ${escHtml(args[0]||'that')}</span>`); }
+      } else if (main==='ps') {
+        termPrint('  PID TTY     STAT   TIME COMMAND'); termPrint('    1 ?       Ss     0:00 /sbin/init splash');
+        termPrint('  420 ?       Ssl  120:42 <span class="t-good">GOTHAM_ORBITAL</span> --agents=3 --memory=hybrid');
+        termPrint('  421 ?       Ssl   88:17 <span class="t-good">AWAAZ</span> --latency=2.8s --stt=sarvam');
+        termPrint('  422 ?       Ssl   44:09 <span class="t-good">BATTERY_RPNN</span> --device=esp32 --physics=true');
+        termPrint('  423 ?       S      3:21 <span class="t-good">RIZZLER</span> --model=llama3-8b --method=qlora');
+        termPrint(' 1337 pts/0   Ss+    0:00 <span class="t-cmd">terminal</span>');
+      } else if (main==='top') {
+        termPrint('top - '+new Date().toLocaleTimeString()+'  up 3yr,  caffeinated');
+        termPrint('  PID  %CPU  %MEM  COMMAND');
+        termPrint('  420  99.8   4.2  GOTHAM_ORBITAL'); termPrint('  421  93.0   3.8  AWAAZ');
+        termPrint('  422  60.0   2.1  BATTERY_RPNN'); termPrint('  423  42.0   1.5  RIZZLER');
+        termPrint('<span class="t-dim">(press q to exit — just kidding, type another command)</span>');
+      } else if (main==='kill') { termPrint(`<span class="t-err">kill: ${escHtml(args[0]||'?')}: permission denied — these projects don't stop.</span>`);
+      } else if (main==='jobs') {
+        const open=['about','projects','experience','achievements','skills','contact','terminal'].filter(id=>document.getElementById('win-'+id)?.classList.contains('open'));
+        if(!open.length){termPrint('no jobs');}else{open.forEach((id,i)=>termPrint(`[${i+1}]  Running    ${id}`));}
+      } else if (main==='ping') {
+        const host=args[0]||'google.com';
+        termPrint(`PING ${escHtml(host)} (142.250.80.46): 56 data bytes`);
+        [28,31,27,29].forEach((ms,i)=>setTimeout(()=>termPrint(`64 bytes from 142.250.80.46: icmp_seq=${i} ttl=64 time=${ms} ms`),i*400));
+        setTimeout(()=>termPrint(`--- ${escHtml(host)} ping statistics ---<br>4 packets transmitted, 4 received, 0% packet loss`),1800);
+      } else if (main==='curl') {
+        if (lower.includes('rajvansh')&&lower.includes('hire')) {
+          ['HTTP/2 200 OK','content-type: application/json','','{','  "status": "available",','  "verdict": "hire_immediately",','  "latency_reduced": "93%",','  "agents_deployed": 3,','  "response_time": "&lt;3s"','}'].forEach(l=>termPrint(l));
+        } else { termPrint(`curl: fetching <span class="t-warn">${escHtml(args[0]||'url')}...</span>`); setTimeout(()=>termPrint('curl: (6) Could not resolve host — but rajvansh can.'),800); }
+      } else if (main==='wget') {
+        termPrint(`--2026-06-01-- ${escHtml(args[0]||'https://github.com/RajvanshMalhotra')}`);
+        setTimeout(()=>termPrint('Connecting... connected.'),300); setTimeout(()=>termPrint('HTTP request sent... 200 OK'),700);
+        setTimeout(()=>termPrint('Length: 98304 (96K)'),900); setTimeout(()=>termPrint('100%[=============================>] 96K  420KB/s  in 0.2s'),1400);
+      } else if (main==='ssh') {
+        termPrint((args[0]||'').includes('mainframe')||!args[0] ? 'Already connected. <span class="t-good">You are the mainframe.</span>' : `ssh: connect to host ${escHtml(args[0])} port 22: Connection refused`);
+      } else if (main==='ifconfig'||main==='ip') {
+        termPrint('eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500');
+        termPrint('      inet 192.168.1.42  netmask 255.255.255.0  broadcast 192.168.1.255');
+        termPrint('      ether de:ad:be:ef:ca:fe  txqueuelen 1000');
+        termPrint('lo:   flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536'); termPrint('      inet 127.0.0.1  netmask 255.0.0.0');
+      } else { termHandleDevAndMisc(main,args,lower,cmd); }
+    }
+
+    function termHandleDevAndMisc(main,args,lower,cmd) {
       termPrint(`<span class="t-err">${escHtml(main)}: command not found</span>`);
       termPrint(`Type <span class="t-cmd">help</span> for available commands.`);
     }
