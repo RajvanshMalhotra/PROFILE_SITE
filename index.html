@@ -568,8 +568,112 @@
     }
 
     function termHandleDevAndMisc(main,args,lower,cmd) {
-      termPrint(`<span class="t-err">${escHtml(main)}: command not found</span>`);
-      termPrint(`Type <span class="t-cmd">help</span> for available commands.`);
+      if (main==='git') {
+        const sub=args[0];
+        if (sub==='log') {
+          if (args[1]==='--oneline') {
+            ['a3f9c2e perf: eliminate TLS handshake overhead (-400ms/req)','d81b4a1 feat: replace httpx per-request client → module-level AsyncClient','9c2e871 optim: cut LLM tokens 512→200, -60% inference cost','f4a1d09 feat: WebSocket streaming replaces HTTP approval pipeline','b72c3e1 fix: swap Groq Whisper → Sarvam Saaras v3 Codemix STT','8d5f1a2 deploy: AWS EC2 + Docker + GitHub Actions CI/CD for Gotham','3c8e4b7 feat: HybridMemory — BM25 + semantic search + knowledge graph','1a2b3c4 init: first commit — building from scratch']
+            .forEach(l=>termPrint(`<span class="t-cmd">${escHtml(l)}</span>`));
+          } else {
+            termPrint('commit a3f9c2e'); termPrint('Author: Rajvansh Malhotra &lt;2004rajvnsh@gmail.com&gt;'); termPrint('Date:   Sun Jun 1 02:38:00 2026'); termPrint(''); termPrint('    perf: eliminate TLS handshake overhead (-400ms/req)'); termPrint(''); termPrint('    Replace per-request httpx.Client with persistent module-level'); termPrint('    AsyncClient. Eliminates repeated TLS setup on every TTS call.');
+          }
+        } else if (sub==='status') {
+          termPrint('On branch main'); termPrint("Your branch is up to date with 'origin/main'."); termPrint(''); termPrint('nothing to commit, working tree clean'); termPrint('<span class="t-good">Portfolio is production-ready.</span>');
+        } else if (sub==='diff') { termPrint('<span class="t-dim">No diff. Everything shipped.</span>');
+        } else { termPrint(`git: '${escHtml(sub||'')}' is not a git command. See 'git --help'.`); }
+      } else if (main==='docker') {
+        if (args[0]==='ps') {
+          termPrint('CONTAINER ID   IMAGE               STATUS         PORTS     NAMES');
+          termPrint('d3ad1337beef   gotham-orbital:v2   Up 3 days      8000/tcp  gotham_orbital');
+          termPrint('c0ffee420abc   awaaz-backend:v1    Up 18 hours    8080/tcp  awaaz');
+          termPrint('b4773ry999cc   battery-rpnn:esp    Up 7 days      —         battery_rpnn');
+        } else { termPrint('Docker Desktop is not running (but the containers are, somehow).'); }
+      } else if (main==='python3'||main==='python') {
+        termPrint('Python 3.12.0 (main, Jun 1 2026) [GCC 13.0] on linux');
+        termPrint('Type "help", "copyright", or "license" for more information.');
+        termPrint('&gt;&gt;&gt; import rajvansh');
+        termPrint('<span class="t-good">Importing rajvansh v2026.1...</span>');
+        setTimeout(()=>termPrint('✓ latency_optimizer loaded   # reduce(46s, target=3s) → 2.8s'),400);
+        setTimeout(()=>termPrint('✓ llm_finetuner loaded       # QLoRA, r=64, 4-bit quant'),700);
+        setTimeout(()=>termPrint('✓ agentic_ai loaded          # 3 concurrent agents, HybridMemory'),1000);
+        setTimeout(()=>termPrint('✓ physics_nn loaded          # RPNN + ODE loss, ESP32-deployable'),1300);
+        setTimeout(()=>termPrint('<span class="t-cmd">&gt;&gt;&gt; rajvansh.hire()</span>'),1700);
+        setTimeout(()=>termPrint('<span class="t-good">200 OK — {"verdict":"hire_immediately"}</span>'),2100);
+        setTimeout(()=>termPrint('&gt;&gt;&gt; <span class="t-dim">exit()</span>'),2600);
+      } else if (main==='npm') { termPrint('<span class="t-warn">npm: command not found. This is a Python shop.</span>');
+      } else if (['vim','vi','nano'].includes(main)) {
+        termPrint(`Entering ${main}...`); setTimeout(()=>termPrint('Type <span class="t-cmd">:q!</span> to escape.'),500); setTimeout(()=>termPrint('<span class="t-dim">(You cannot. Nobody ever escapes vim.)</span>'),1000);
+      } else if (main==='clear'||main==='cls') { termClear();
+      } else if (main==='history') { termHistory.forEach((c,i)=>termPrint(`  ${String(i+1).padStart(3)}  ${escHtml(c)}`));
+      } else if (main==='help') {
+        termPrint(''); termPrint('<span class="t-cmd">═══════════ AVAILABLE COMMANDS ═══════════</span>'); termPrint('');
+        termPrint('<span class="t-warn">FILESYSTEM:</span>'); termPrint('  ls [-la]   pwd   cd [dir]   cat [file]'); termPrint('');
+        termPrint('<span class="t-warn">SYSTEM:</span>'); termPrint('  whoami   hostname   uname [-a]   date   uptime   env   which   echo   man'); termPrint('');
+        termPrint('<span class="t-warn">PROCESSES:</span>'); termPrint('  ps [aux]   top   kill [pid]   jobs'); termPrint('');
+        termPrint('<span class="t-warn">NETWORK:</span>'); termPrint('  ping [host]   curl [url]   wget [url]   ssh [host]   ifconfig'); termPrint('');
+        termPrint('<span class="t-warn">DEV TOOLS:</span>'); termPrint('  git log [--oneline]   git status   docker ps   python3   vim'); termPrint('');
+        termPrint('<span class="t-warn">PORTFOLIO SHORTCUTS:</span>'); termPrint('  about   projects   experience   achievements   skills   contact   resume'); termPrint('');
+        termPrint('<span class="t-warn">TERMINAL:</span>'); termPrint('  clear / cls   history   help   hint'); termPrint('');
+        termPrint('Type <span class="t-cmd">hint</span> for easter eggs.');
+      } else if (main==='hint') {
+        termPrint(''); termPrint('🎮 Easter Eggs:');
+        termPrint('  <span class="t-cmd">why so serious</span>   — chaos ensues 🃏');
+        termPrint('  <span class="t-cmd">./benchmark.sh</span>   — engineer benchmark report');
+        termPrint('  <span class="t-cmd">hack the planet</span>  — activate hacker mode');
+        termPrint('  <span class="t-cmd">matrix</span>           — toggle matrix intensity');
+        termPrint('  <span class="t-cmd">neofetch</span>         — system info ASCII art');
+        termPrint('');
+      } else if (lower==='why so serious'||lower==='why so serious?') {
+        termPrint('Let me put a smile on that face... 🃏');
+        setTimeout(()=>{ const ov=document.getElementById('joker-overlay'); ov.style.display='flex'; setTimeout(()=>{ ov.style.display='none'; startHackerExit(); },6000); },800);
+      } else if (lower==='hack the planet') {
+        const mb=document.getElementById('matrix-bg'); mb.style.display='block'; mb.style.opacity='0.4';
+        if(!window._matrixRunning)startMatrixBg();
+        termPrint('<span class="t-warn">[HACKING MODE ACTIVATED]</span>'); termPrint('Accessing mainframe...');
+        setTimeout(()=>termPrint('Bypassing firewall...'),500); setTimeout(()=>termPrint('Downloading consciousness...'),1000);
+        setTimeout(()=>termPrint('<span class="t-good">Access granted. Welcome, Neo.</span>'),1500);
+        setTimeout(()=>{document.getElementById('matrix-bg').style.opacity='0.1';},5000);
+      } else if (lower==='matrix') {
+        const mb=document.getElementById('matrix-bg'); mb.style.display='block';
+        if(!window._matrixRunning)startMatrixBg();
+        const cur=parseFloat(mb.style.opacity)||0;
+        if(cur>0.1){mb.style.opacity='0.08';termPrint('[Matrix intensity: LOW]');}
+        else{mb.style.opacity='0.28';termPrint('[Matrix intensity: HIGH]');}
+      } else if (main==='neofetch'||main==='screenfetch') {
+        termPrint(''); termPrint('         _nnnn_         <span class="t-cmd">rajvansh</span>@<span class="t-good">mainframe</span>');
+        termPrint('        dGGGGMMb        ─────────────────────────────');
+        termPrint('       @p~qp~~qMb       <span class="t-warn">OS:</span> RajvanshOS 2026.1.0');
+        termPrint('       M|@||@) M|       <span class="t-warn">Host:</span> Portfolio System');
+        termPrint('       @,----.JM|       <span class="t-warn">Kernel:</span> AGI-class 6.0.0');
+        termPrint('      JS^\\__/  qKL      <span class="t-warn">Uptime:</span> 3 years, caffeinated');
+        termPrint('     dZP        qKRb    <span class="t-warn">Shell:</span> matrix-terminal');
+        termPrint('    dZP          qKKb   <span class="t-warn">CPU:</span> Neural Processor @ ∞GHz');
+        termPrint('   fZP            SMMb  <span class="t-warn">GPU:</span> Vision Transformer v19');
+        termPrint('   HZM            MMMM  <span class="t-warn">Memory:</span> 420GB DDR5');
+        termPrint('   FqM            MMMM  <span class="t-warn">Projects:</span> 4 deployed');
+        termPrint(' __| ".        |\\dS"qML <span class="t-warn">Agents:</span> 3 concurrent LLMs');
+        termPrint(" |    `.       | `' \\Zq <span class=\"t-warn\">Status:</span> Building AGI");
+        termPrint("_)      \\.___.,|     .' "); termPrint("\\____   )MMMMMP|   .'  "); termPrint("     `-'       `--'   "); termPrint('');
+      } else if (lower==='./benchmark.sh'||lower==='benchmark'||lower==='./benchmark') {
+        runBenchmark();
+      } else if (['about','projects','experience','achievements','skills','contact'].includes(main)) {
+        openWindow(main); termPrint(`[Opening ${main}...]`);
+      } else if (main==='resume'||main==='cv') {
+        window.open('./assets/resume.pdf','_blank'); termPrint('&gt; Opening resume.pdf...');
+      } else if (lower.includes('show')||lower.includes('display')||lower.includes('open ')||lower.includes('what')) {
+        const map={project:'projects',experience:'experience',skill:'skills',achievement:'achievements',contact:'contact',about:'about'};
+        const hit=Object.keys(map).find(k=>lower.includes(k));
+        if(hit){openWindow(map[hit]);termPrint(`[Opening ${map[hit]}...]`);}
+        else{termPrint(`<span class="t-err">${escHtml(main)}: command not found</span>`);termPrint(`Type <span class="t-cmd">help</span> for available commands.`);}
+      } else if (main==='sudo') {
+        if(lower.includes('rm')&&lower.includes('-rf')){document.body.style.animation='shake 0.5s';setTimeout(()=>document.body.style.animation='',500);termPrint('Nice try. But you cannot delete my portfolio. 😎');}
+        else{termPrint('[sudo] password for rajvansh: ');setTimeout(()=>termPrint('<span class="t-err">sudo: user rajvansh is not in the sudoers file. This incident will be reported.</span>'),900);}
+      } else if (!main) {
+        // empty
+      } else {
+        termPrint(`<span class="t-err">${escHtml(main)}: command not found</span>`);
+        termPrint(`Type <span class="t-cmd">help</span> for available commands.`);
+      }
     }
 
     function updateClock() {
