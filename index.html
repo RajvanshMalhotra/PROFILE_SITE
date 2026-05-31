@@ -173,6 +173,23 @@
     .dock-item:hover::before { opacity:1; }
     @keyframes dockBounce { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-18px)} 60%{transform:translateY(-8px)} }
     .dock-item.bouncing { animation:dockBounce 0.55s ease; }
+
+    #win-terminal .win-body { padding:0; display:flex; flex-direction:column; background:#0a0a0a; }
+    .term-output { flex:1; overflow-y:auto; overflow-x:hidden; padding:12px 16px; font-family:var(--font-mono); font-size:13px; color:var(--green); line-height:1.75; scrollbar-width:thin; scrollbar-color:var(--surface2) transparent; }
+    .term-output::-webkit-scrollbar { width:5px; }
+    .term-output::-webkit-scrollbar-thumb { background:var(--surface2); border-radius:3px; }
+    .term-line { margin-bottom:2px; word-break:break-word; }
+    .term-input-row { display:flex; align-items:center; padding:8px 16px; gap:6px; background:#080808; border-top:1px solid var(--surface2); flex-shrink:0; }
+    .term-prompt-label { color:var(--pink); font-family:var(--font-mono); font-size:13px; white-space:nowrap; }
+    .term-input { flex:1; background:transparent; border:none; outline:none; color:var(--green); font-family:var(--font-mono); font-size:13px; caret-color:var(--green); }
+    .term-input::placeholder { color:rgba(0,255,65,0.3); }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .t-cmd  { color:var(--pink); }
+    .t-path { color:#4ec9b0; }
+    .t-dim  { color:#555; }
+    .t-warn { color:#ffbd2e; }
+    .t-err  { color:#ff5f57; }
+    .t-good { color:var(--green); }
   </style>
 </head>
 <body>
@@ -408,7 +425,65 @@
       });
     }
 
-    function buildTerminalBody(el) {}
+    function buildTerminalBody(el) {
+      const body = el.querySelector('.win-body');
+      body.innerHTML = `
+        <div class="term-output" id="term-output">
+          <div class="term-line">Welcome to <span class="t-good">RajvanshOS 2026.1</span></div>
+          <div class="term-line">Type <span class="t-cmd">'help'</span> for commands, <span class="t-cmd">'hint'</span> for easter eggs.</div>
+          <div class="term-line"></div>
+        </div>
+        <div class="term-input-row">
+          <span class="term-prompt-label">rajvansh@mainframe:~/desktop&nbsp;$&nbsp;</span>
+          <input class="term-input" id="term-input" autocomplete="off" spellcheck="false" placeholder="type a command...">
+        </div>
+      `;
+      initTerminal();
+    }
+
+    let termHistory = [], termHistIdx = -1, termCwd = '~/desktop';
+
+    function initTerminal() {
+      const input = document.getElementById('term-input');
+      if (!input) return;
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          const cmd = input.value; input.value = '';
+          if (cmd.trim()) { termHistory.push(cmd); termHistIdx=termHistory.length; runCommand(cmd.trim()); }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault(); if (termHistIdx>0) input.value=termHistory[--termHistIdx];
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (termHistIdx<termHistory.length-1) { input.value=termHistory[++termHistIdx]; }
+          else { termHistIdx=termHistory.length; input.value=''; }
+        }
+      });
+      document.getElementById('win-terminal').addEventListener('click', () => input.focus());
+    }
+
+    function termPrint(html, cls='') {
+      const out=document.getElementById('term-output'); if(!out)return;
+      const line=document.createElement('div'); line.className='term-line '+cls; line.innerHTML=html;
+      out.appendChild(line); out.scrollTop=out.scrollHeight;
+    }
+
+    function termPrintCmd(cmd) {
+      termPrint(`<span class="t-path">${termCwd}</span>&nbsp;<span class="t-cmd">$</span>&nbsp;${escHtml(cmd)}`);
+    }
+
+    function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function termClear() { const out=document.getElementById('term-output'); if(out)out.innerHTML=''; }
+
+    function runCommand(rawCmd) {
+      const cmd=rawCmd.trim(), lower=cmd.toLowerCase(), parts=cmd.split(/\s+/), main=parts[0].toLowerCase(), args=parts.slice(1);
+      termPrintCmd(cmd);
+      termHandleCommand(main, args, lower, cmd);
+    }
+
+    function termHandleCommand(main, args, lower, cmd) {
+      termPrint(`<span class="t-err">${escHtml(main)}: command not found</span>`);
+      termPrint(`Type <span class="t-cmd">help</span> for available commands.`);
+    }
 
     function updateClock() {
       const now = new Date();
