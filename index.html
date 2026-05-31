@@ -190,6 +190,9 @@
     .t-warn { color:#ffbd2e; }
     .t-err  { color:#ff5f57; }
     .t-good { color:var(--green); }
+
+    .hacker-text { font-size:26px; margin:8px 0; color:var(--green); text-shadow:0 0 20px var(--green); animation:glitch 0.3s infinite; }
+    @keyframes glitch { 0%,100%{transform:translate(0)} 20%{transform:translate(-2px,2px)} 40%{transform:translate(-2px,-2px)} 60%{transform:translate(2px,2px)} 80%{transform:translate(2px,-2px)} }
   </style>
 </head>
 <body>
@@ -704,6 +707,73 @@
       const dot = document.getElementById('dot-'+id);
       if (dot) dot.classList.toggle('active', active);
     }
+
+    function runBenchmark() {
+      termPrint('<span class="t-warn">RUNNING BENCHMARK...</span>');
+      const bar=document.createElement('div'); bar.className='term-line';
+      bar.innerHTML='░'.repeat(20)+' 0%';
+      document.getElementById('term-output').appendChild(bar);
+      document.getElementById('term-output').scrollTop=99999;
+      let p=0;
+      const fill=setInterval(()=>{
+        p=Math.min(p+Math.floor(Math.random()*8)+3,100);
+        const filled=Math.round(p/5);
+        bar.innerHTML=`<span class="t-good">${'▓'.repeat(filled)}</span>${'░'.repeat(20-filled)} ${p}%`;
+        document.getElementById('term-output').scrollTop=99999;
+        if(p>=100){clearInterval(fill);setTimeout(printBenchmarkTable,400);}
+      },120);
+    }
+
+    function printBenchmarkTable() {
+      const rows=[
+        ['Voice AI Latency',               '46.0 s',    '2.8 s',    '▲ 93% faster'],
+        ['Deepfake Detection Accuracy',     '60%',       '99.8%',    '▲ +39.8pp'],
+        ['LLM Token Usage (per req)',       '512 tok',   '200 tok',  '▼ 60% leaner'],
+        ['TLS Overhead per Request',        '400 ms',    '0 ms',     '✓ eliminated'],
+        ['Concurrent LLM Agents Deployed',  '0',         '3',        '✓ and growing'],
+        ['CI/CD Pipeline',                  '❌ manual', '✓ Actions','✓ automated'],
+        ['Taekwondo Medals',                '0',         '4',        '✓ gold + silver'],
+      ];
+      const w=[33,14,14,20];
+      const line=(a,b,c,d)=>`│ ${a.padEnd(w[0])}│ ${b.padEnd(w[1])}│ ${c.padEnd(w[2])}│ ${d.padEnd(w[3])}│`;
+      const sep=(l,m,r)=>l+'─'.repeat(w[0]+2)+m+'─'.repeat(w[1]+2)+m+'─'.repeat(w[2]+2)+m+'─'.repeat(w[3]+2)+r;
+      termPrint('');
+      termPrint('<span class="t-cmd">'+sep('┌','┬','┐')+'</span>');
+      termPrint('<span class="t-cmd">'+line('METRIC','BASELINE ENG','RAJVANSH','DELTA')+'</span>');
+      termPrint('<span class="t-cmd">'+sep('├','┼','┤')+'</span>');
+      rows.forEach(r=>termPrint(line(r[0],r[1],`<span class="t-good">${r[2]}</span>`,`<span class="t-good">${r[3]}</span>`)));
+      termPrint('<span class="t-cmd">'+sep('├','┼','┤')+'</span>');
+      termPrint(line('OVERALL SCORE','41 / 100','<span class="t-good">847/100</span>','<span class="t-warn">[OVERFLOW]</span>'));
+      termPrint('<span class="t-cmd">'+sep('└','┴','┘')+'</span>');
+      termPrint(''); termPrint('<span class="t-good">VERDICT: hire immediately or competitors will.</span>'); termPrint('');
+    }
+
+    let _matrixBgInterval=null;
+    function startMatrixBg() {
+      const c=document.getElementById('matrix-bg');
+      c.width=window.innerWidth; c.height=window.innerHeight;
+      const ctx=c.getContext('2d'), cols=Math.floor(c.width/14), drops=Array(cols).fill(1);
+      const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+      window._matrixRunning=true;
+      _matrixBgInterval=setInterval(()=>{
+        ctx.fillStyle='rgba(0,0,0,0.05)'; ctx.fillRect(0,0,c.width,c.height);
+        ctx.fillStyle='#00FF41'; ctx.font='14px monospace';
+        drops.forEach((y,i)=>{ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*14,y*14);if(y*14>c.height&&Math.random()>0.975)drops[i]=0;drops[i]++;});
+      },40);
+    }
+
+    function startHackerExit() {
+      const el=document.getElementById('hacker-exit'), ec=document.getElementById('exit-matrix');
+      ec.width=window.innerWidth; ec.height=window.innerHeight;
+      const ctx=ec.getContext('2d'), chars='01アイウエオカキクケコサシスセソ', cols=Math.floor(ec.width/20), drops=Array(cols).fill(1);
+      el.style.display='flex';
+      const iv=setInterval(()=>{
+        ctx.fillStyle='rgba(0,0,0,0.05)'; ctx.fillRect(0,0,ec.width,ec.height);
+        ctx.fillStyle='#00FF41'; ctx.font='20px monospace';
+        drops.forEach((y,i)=>{ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*20,y*20);if(y*20>ec.height&&Math.random()>0.975)drops[i]=0;drops[i]++;});
+      },50);
+      setTimeout(()=>{clearInterval(iv);el.style.display='none';termPrint('');termPrint('Welcome back... if you dare. 😈');termPrint('');},20000);
+    }
   </script>
   <div id="dock">
     <div class="dock-item" data-target="about"    data-tip="Finder"><div class="dock-icon">&#128193;</div><div class="dock-dot" id="dot-about"></div></div>
@@ -713,6 +783,19 @@
     <div class="dock-item" data-target="resume"    data-tip="Resume"><div class="dock-icon">&#11088;</div><div class="dock-dot"></div></div>
     <div class="dock-item" data-url="https://github.com/RajvanshMalhotra" data-tip="GitHub"><div class="dock-icon">&#128024;</div><div class="dock-dot"></div></div>
     <div class="dock-item" data-target="contact"   data-tip="Contact"><div class="dock-icon">&#128140;</div><div class="dock-dot" id="dot-contact"></div></div>
+  </div>
+  <canvas id="matrix-bg" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:0;pointer-events:none;display:none;transition:opacity 0.5s;"></canvas>
+  <div id="joker-overlay" style="position:fixed;inset:0;background:#000;z-index:20000;display:none;align-items:center;justify-content:center;">
+    <img src="./assets/joker.gif" alt="Why so serious?" style="max-width:100%;max-height:100%;object-fit:contain;">
+  </div>
+  <div id="hacker-exit" style="position:fixed;inset:0;background:#000;z-index:25000;display:none;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-mono);">
+    <canvas id="exit-matrix" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.3;"></canvas>
+    <div style="position:relative;z-index:1;text-align:center;">
+      <div class="hacker-text">CONNECTION TERMINATED</div>
+      <div class="hacker-text" style="animation-delay:0.3s">CLEARING TRACES...</div>
+      <div class="hacker-text" style="animation-delay:0.6s">WIPING MEMORY...</div>
+      <div class="hacker-text" style="margin-top:30px;font-size:18px;animation-delay:1s">See you in the shadows...</div>
+    </div>
   </div>
 </body>
 </html>
