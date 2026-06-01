@@ -78,8 +78,11 @@
     #menubar-clock { font-size: 12px; font-family: var(--font-ui); white-space: nowrap; }
 
     #desktop {
-      position: fixed; top: 26px; left: 0; right: 0; bottom: 78px;
-      background: url('./assets/wallp.jpg') no-repeat center center / cover;
+      position: fixed; top: 26px; left: 0; right: 0; bottom: 0;
+      background-image: url('./assets/wallp.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
       display: flex; flex-direction: column; align-items: flex-start;
       padding: 20px 14px; gap: 12px; overflow: hidden;
     }
@@ -243,6 +246,28 @@
   <div class="win" id="win-skills"       data-title="📁 Skills"          style="left:24%;top:13%"></div>
   <div class="win" id="win-contact"      data-title="📁 Contact"         style="left:16%;top:15%"></div>
   <div class="win" id="win-terminal"     data-title="💻 Terminal — rajvansh@mainframe: ~/desktop" style="left:10%;top:8%"></div>
+  <div id="dock">
+    <div class="dock-item" data-target="about"    data-tip="Finder"><div class="dock-icon">&#128193;</div><div class="dock-dot" id="dot-about"></div></div>
+    <div class="dock-item" data-target="projects"  data-tip="Projects"><div class="dock-icon">&#128640;</div><div class="dock-dot" id="dot-projects"></div></div>
+    <div class="dock-item" data-target="terminal"  data-tip="Terminal"><div class="dock-icon">&#128187;</div><div class="dock-dot" id="dot-terminal"></div></div>
+    <div class="dock-separator"></div>
+    <div class="dock-item" data-target="resume"    data-tip="Resume"><div class="dock-icon">&#11088;</div><div class="dock-dot"></div></div>
+    <div class="dock-item" data-url="https://github.com/RajvanshMalhotra" data-tip="GitHub"><div class="dock-icon">&#128025;</div><div class="dock-dot"></div></div>
+    <div class="dock-item" data-target="contact"   data-tip="Contact"><div class="dock-icon">&#128140;</div><div class="dock-dot" id="dot-contact"></div></div>
+  </div>
+  <canvas id="matrix-bg" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:0;pointer-events:none;display:none;transition:opacity 0.5s;"></canvas>
+  <div id="joker-overlay" style="position:fixed;inset:0;background:#000;z-index:20000;display:none;align-items:center;justify-content:center;">
+    <img src="./assets/joker.gif" alt="Why so serious?" style="max-width:100%;max-height:100%;object-fit:contain;">
+  </div>
+  <div id="hacker-exit" style="position:fixed;inset:0;background:#000;z-index:25000;display:none;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-mono);">
+    <canvas id="exit-matrix" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.3;"></canvas>
+    <div style="position:relative;z-index:1;text-align:center;">
+      <div class="hacker-text">CONNECTION TERMINATED</div>
+      <div class="hacker-text" style="animation-delay:0.3s">CLEARING TRACES...</div>
+      <div class="hacker-text" style="animation-delay:0.6s">WIPING MEMORY...</div>
+      <div class="hacker-text" style="margin-top:30px;font-size:18px;animation-delay:1s">See you in the shadows...</div>
+    </div>
+  </div>
   <!-- Loading Screen -->
   <div id="loading-screen">
     <canvas id="loading-matrix"></canvas>
@@ -318,7 +343,7 @@
       });
       icon.addEventListener('dblclick', () => {
         const target = icon.dataset.target;
-        if (target === 'resume') { window.open('./assets/resume.pdf', '_blank'); }
+        if (target === 'resume') { openResume(); }
         else { openWindow(target); }
       });
     });
@@ -327,6 +352,16 @@
         selectedIcon.classList.remove('selected'); selectedIcon = null;
       }
     });
+    function openResume() {
+      const a = document.createElement('a');
+      a.href = './assets/resume.pdf';
+      a.target = '_blank';
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
     let zTop = 200;
 
     function buildWindow(id) {
@@ -517,7 +552,7 @@
       } else if (main==='cat') {
         const file=args[0]||'';
         if (!file) { termPrint('<span class="t-err">cat: missing operand</span>'); }
-        else if (file==='resume.pdf'||file==='./assets/resume.pdf') { termPrint('&gt; Opening resume.pdf...'); window.open('./assets/resume.pdf','_blank'); }
+        else if (file==='resume.pdf'||file==='./assets/resume.pdf') { termPrint('&gt; Opening resume.pdf...'); openResume(); }
         else if (['intro.txt','philosophy.txt','experience.log','achievements.txt','skills.json'].includes(file)) {
           const id=file.replace('.txt','').replace('.log','').replace('.json','').replace('intro','about').replace('philosophy','about');
           openWindow(id); termPrint(`&gt; cat ${escHtml(file)} → opening window...`);
@@ -677,7 +712,7 @@
       } else if (['about','projects','experience','achievements','skills','contact'].includes(main)) {
         openWindow(main); termPrint(`[Opening ${main}...]`);
       } else if (main==='resume'||main==='cv') {
-        window.open('./assets/resume.pdf','_blank'); termPrint('&gt; Opening resume.pdf...');
+        openResume(); termPrint('&gt; Opening resume.pdf...');
       } else if (lower.includes('show')||lower.includes('display')||lower.includes('open ')||lower.includes('what')) {
         const map={project:'projects',experience:'experience',skill:'skills',achievement:'achievements',contact:'contact',about:'about'};
         const hit=Object.keys(map).find(k=>lower.includes(k));
@@ -709,7 +744,7 @@
         item.addEventListener('animationend', () => item.classList.remove('bouncing'), {once:true});
         if (item.dataset.url) { window.open(item.dataset.url,'_blank'); return; }
         const target = item.dataset.target;
-        if (target === 'resume') { window.open('./assets/resume.pdf','_blank'); return; }
+        if (target === 'resume') { openResume(); return; }
         if (target) {
           const win = document.getElementById('win-'+target);
           if (win && win.classList.contains('open') && !win.dataset.minimised) { bringToFront(win); }
@@ -790,27 +825,5 @@
       setTimeout(()=>{clearInterval(iv);el.style.display='none';termPrint('');termPrint('Welcome back... if you dare. 😈');termPrint('');},20000);
     }
   </script>
-  <div id="dock">
-    <div class="dock-item" data-target="about"    data-tip="Finder"><div class="dock-icon">&#128193;</div><div class="dock-dot" id="dot-about"></div></div>
-    <div class="dock-item" data-target="projects"  data-tip="Projects"><div class="dock-icon">&#128640;</div><div class="dock-dot" id="dot-projects"></div></div>
-    <div class="dock-item" data-target="terminal"  data-tip="Terminal"><div class="dock-icon">&#128187;</div><div class="dock-dot" id="dot-terminal"></div></div>
-    <div class="dock-separator"></div>
-    <div class="dock-item" data-target="resume"    data-tip="Resume"><div class="dock-icon">&#11088;</div><div class="dock-dot"></div></div>
-    <div class="dock-item" data-url="https://github.com/RajvanshMalhotra" data-tip="GitHub"><div class="dock-icon">&#128024;</div><div class="dock-dot"></div></div>
-    <div class="dock-item" data-target="contact"   data-tip="Contact"><div class="dock-icon">&#128140;</div><div class="dock-dot" id="dot-contact"></div></div>
-  </div>
-  <canvas id="matrix-bg" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:0;pointer-events:none;display:none;transition:opacity 0.5s;"></canvas>
-  <div id="joker-overlay" style="position:fixed;inset:0;background:#000;z-index:20000;display:none;align-items:center;justify-content:center;">
-    <img src="./assets/joker.gif" alt="Why so serious?" style="max-width:100%;max-height:100%;object-fit:contain;">
-  </div>
-  <div id="hacker-exit" style="position:fixed;inset:0;background:#000;z-index:25000;display:none;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-mono);">
-    <canvas id="exit-matrix" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.3;"></canvas>
-    <div style="position:relative;z-index:1;text-align:center;">
-      <div class="hacker-text">CONNECTION TERMINATED</div>
-      <div class="hacker-text" style="animation-delay:0.3s">CLEARING TRACES...</div>
-      <div class="hacker-text" style="animation-delay:0.6s">WIPING MEMORY...</div>
-      <div class="hacker-text" style="margin-top:30px;font-size:18px;animation-delay:1s">See you in the shadows...</div>
-    </div>
-  </div>
 </body>
 </html>
