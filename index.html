@@ -629,6 +629,7 @@ bgv.addEventListener('canplay', () => {
   document.body.classList.add('has-video');
   console.log('[bg video] playing:', bgv.currentSrc || bgv.src);
   bgv.muted = true; /* visuals only, sound comes from the audio player */
+  bgv.playbackRate = 1.5; /* video plays faster than its own audio track (which is muted anyway) */
   bgv.play().catch(() => {});
   if (!bga.src) bga.src = bgv.currentSrc || bgv.src;
 });
