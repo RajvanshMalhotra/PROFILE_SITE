@@ -1,829 +1,840 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rajvansh OS — Desktop</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajvansh Malhotra — An Engineer's Story</title>
+<meta name="description" content="Rajvansh Malhotra — machine learning engineer. A story told in seven chapters.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#040405;
+  --ink:#e9e7e4;            /* cold bone */
+  --dim:#8f8d8b;
+  --faint:#4a4948;
+  --red:#e0263a;  --red-hi:#ff5e6e;   /* the signal */
+  --steel:#7d93ad; --steel-hi:#b7c9dd; /* gotham rain */
+  --hair:rgba(233,231,228,.12);
+  --display:'Anton',Impact,sans-serif;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --mono:'JetBrains Mono',monospace;
+}
+html.lenis{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto}
+body{background:var(--bg);color:var(--ink);font-family:var(--mono);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--red);color:#000}
+a{color:inherit}
 
-    :root {
-      --green:       #00FF41;
-      --pink:        #FF0066;
-      --cyan:        #00D4FF;
-      --bg:          #000000;
-      --surface:     #0d0d0d;
-      --surface2:    #1a1a1a;
-      --surface3:    #1c1c1e;
-      --border:      rgba(0, 255, 65, 0.18);
-      --border2:     rgba(255, 255, 255, 0.08);
-      --glass-bg:    rgba(13, 13, 13, 0.88);
-      --glass-blur:  blur(24px);
-      --dock-bg:     rgba(255, 255, 255, 0.07);
-      --menubar-bg:  rgba(15, 15, 15, 0.92);
-      --font-mono:   'Fira Code', 'Courier New', monospace;
-      --font-ui:     -apple-system, system-ui, sans-serif;
-      --radius-sm:   6px;
-      --radius-md:   10px;
-      --radius-lg:   14px;
-      --shadow-win:  0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.05);
-      --transition:  all 0.2s ease;
-    }
+/* chapter mood accents */
+[data-accent="steel"]{--acc:var(--steel);--acc-hi:var(--steel-hi)}
+[data-accent="crimson"]{--acc:var(--red);--acc-hi:var(--red-hi)}
+[data-accent="mono"]{--acc:#e9e7e4;--acc-hi:#ffffff}
 
-    html, body {
-      width: 100%; height: 100%;
-      overflow: hidden;
-      background: var(--bg);
-      font-family: var(--font-mono);
-      color: var(--green);
-      user-select: none;
-    }
+/* ── THE RIDDLE GATE ── */
+:root{--riddler:#2ef06a}
+#gate{position:fixed;inset:0;background:#000;z-index:1100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;cursor:pointer}
+#gate::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 50% 46%,rgba(46,240,106,.05),transparent 70%)}
+#riddle{background:none;border:none;cursor:pointer;padding:0;will-change:transform;animation:riddlePulse 2.2s ease-in-out infinite}
+/* <?> rendered as an LED dot-matrix: dots pattern clipped inside the glyphs */
+#riddle .rq{
+  display:block;font-family:var(--mono);font-weight:700;
+  font-size:clamp(84px,15vw,160px);line-height:1;letter-spacing:.02em;
+  color:transparent;
+  background:radial-gradient(circle,var(--riddler) 1.3px,rgba(46,240,106,.14) 1.6px,transparent 2px) 0 0/7px 7px;
+  -webkit-background-clip:text;background-clip:text;
+  animation:rqFlicker 4.5s steps(1) infinite;
+}
+#riddle .rq i{font-style:normal;font-family:Georgia,'Times New Roman',serif;font-weight:600;padding:0 .04em}
+@keyframes rqFlicker{0%,100%{opacity:1}7%{opacity:.75}8%{opacity:1}42%{opacity:1}43%{opacity:.65}44%{opacity:1}71%{opacity:.85}72%{opacity:1}}
+@keyframes riddlePulse{0%,100%{filter:drop-shadow(0 0 8px rgba(46,240,106,.35))}50%{filter:drop-shadow(0 0 30px rgba(46,240,106,.8))}}
+#type-line{font-family:var(--mono);font-size:clamp(10px,1.3vw,13px);letter-spacing:.34em;text-transform:uppercase;color:var(--riddler);text-shadow:0 0 12px rgba(46,240,106,.55);min-height:1.4em;will-change:transform}
+#type-line .caret{display:inline-block;width:.62em;height:1.05em;background:var(--riddler);vertical-align:text-bottom;margin-left:4px;animation:caretBlink .85s steps(1) infinite;box-shadow:0 0 10px rgba(46,240,106,.7)}
+@keyframes caretBlink{0%,55%{opacity:1}56%,100%{opacity:0}}
 
-    #loading-screen {
-      position: fixed; inset: 0;
-      background: #000;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.8s ease;
-    }
-    #loading-screen.hidden { opacity: 0; pointer-events: none; }
-    #loading-matrix { position: absolute; inset: 0; width: 100%; height: 100%; }
-    .loading-content {
-      position: relative; z-index: 1;
-      display: flex; flex-direction: column; align-items: center; gap: 16px;
-      font-family: var(--font-mono);
-    }
-    .loading-text { font-size: 22px; font-weight: 700; color: var(--green); text-shadow: 0 0 20px var(--green); letter-spacing: 3px; }
-    .loading-bar { width: 380px; height: 28px; border: 2px solid var(--green); background: transparent; overflow: hidden; box-shadow: 0 0 12px rgba(0,255,65,0.3); }
-    .loading-fill { height: 100%; width: 0%; background: var(--green); transition: width 0.3s ease; box-shadow: 0 0 20px var(--green); }
-    .loading-status { font-size: 11px; color: rgba(0,255,65,0.7); letter-spacing: 1px; }
+/* ── GRAIN / LETTERBOX / PROGRESS ── */
+#grain{position:fixed;inset:-100%;z-index:900;pointer-events:none;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");animation:grain 7s steps(10) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-5%,-8%)}30%{transform:translate(3%,-12%)}50%{transform:translate(9%,4%)}70%{transform:translate(-7%,6%)}90%{transform:translate(5%,10%)}}
+.bar{position:fixed;left:0;right:0;height:0;background:#000;z-index:800;transition:height 1.7s cubic-bezier(.77,0,.18,1)}
+#bar-top{top:0}#bar-bottom{bottom:0}
+body.boot .bar{height:12vh}
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,#5a0f18,var(--red));z-index:950}
 
-    #menubar {
-      position: fixed; top: 0; left: 0; right: 0; height: 26px;
-      background: var(--menubar-bg);
-      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 12px; z-index: 5000;
-      font-family: var(--font-ui); font-size: 12px; color: rgba(255,255,255,0.88);
-    }
-    .menubar-left, .menubar-right { display: flex; align-items: center; gap: 16px; }
-    .menu-apple { font-size: 15px; cursor: default; }
-    .menu-app { font-weight: 600; }
-    .menu-item { cursor: default; opacity: 0.85; padding: 1px 7px; border-radius: 4px; transition: background 0.12s; }
-    .menu-item:hover { opacity: 1; background: rgba(255,255,255,0.12); }
-    .menu-icon { font-size: 13px; opacity: 0.75; }
-    #menubar-clock { font-size: 12px; font-family: var(--font-ui); white-space: nowrap; }
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:940;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,56px);mix-blend-mode:difference}
+.nav-mark{font-size:12px;letter-spacing:.3em;color:#fff;text-decoration:none;font-weight:500}
+.nav-links{display:flex;gap:clamp(16px,3vw,40px)}
+.nav-links a{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#fff;text-decoration:none;opacity:.6;transition:opacity .2s}
+.nav-links a:hover{opacity:1}
+.nav-right{display:flex;align-items:center;gap:clamp(12px,2vw,26px)}
+#timecode{font-size:10px;letter-spacing:.2em;color:#fff;opacity:.6}
+#sound{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;font-family:var(--mono);font-size:9px;letter-spacing:.26em;padding:7px 14px;text-transform:uppercase;cursor:pointer;opacity:.7;transition:opacity .2s;display:flex;align-items:center;gap:9px}
+#sound:hover{opacity:1}
+#sound .eq{display:flex;align-items:flex-end;gap:2px;height:10px}
+#sound .eq i{width:2px;background:#fff;height:3px}
+#sound.on .eq i{animation:eq .9s ease-in-out infinite}
+#sound.on .eq i:nth-child(2){animation-delay:.2s}
+#sound.on .eq i:nth-child(3){animation-delay:.45s}
+@keyframes eq{0%,100%{height:3px}50%{height:10px}}
+@media(max-width:760px){.nav-links{display:none}#timecode{display:none}}
 
-    #desktop {
-      position: fixed; top: 26px; left: 0; right: 0; bottom: 0;
-      background-image: url('./assets/wallp.jpg');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      display: flex; flex-direction: column; align-items: flex-start;
-      padding: 20px 14px; gap: 12px; overflow: hidden;
-    }
-    .desktop-icon {
-      width: 72px; min-height: 80px;
-      display: flex; flex-direction: column; align-items: center;
-      gap: 5px; padding: 6px 4px; border-radius: var(--radius-sm);
-      cursor: pointer; transition: background 0.15s; text-align: center;
-    }
-    .desktop-icon:hover { background: rgba(255,255,255,0.12); }
-    .desktop-icon.selected { background: rgba(0,212,255,0.25); outline: 1px dashed rgba(255,255,255,0.5); animation: iconPulse 0.3s ease; }
-    @keyframes iconPulse { 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
-    .icon-img { font-size: 44px; line-height: 1; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6)); }
-    .icon-label {
-      font-size: 10px; font-family: var(--font-ui); font-weight: 500; color: #fff;
-      text-shadow: 0 1px 4px rgba(0,0,0,1), 0 0 8px rgba(0,0,0,0.9);
-      word-break: break-word; line-height: 1.25; max-width: 70px;
-    }
+/* ── BACKGROUND FILM ── */
+#bgvid{
+  position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:none;
+  filter:blur(5px) brightness(.78) contrast(1.1) saturate(1.05);
+  transform:scale(1.05); /* hide blur fringing */
+}
+body.has-video #bgvid{display:block}
+#vid-shade{position:fixed;inset:0;z-index:1;pointer-events:none;display:none;
+  background:
+    linear-gradient(180deg,rgba(4,4,5,.4),rgba(4,4,5,.14) 30%,rgba(4,4,5,.14) 70%,rgba(4,4,5,.45)),
+    radial-gradient(ellipse at 50% 42%,rgba(4,4,5,0),rgba(4,4,5,.55) 96%)}
+body.has-video #vid-shade{display:block}
+#gl{position:fixed;inset:0;z-index:1}
 
-    .win {
-      position: fixed; width: 680px; height: 520px;
-      min-width: 480px; min-height: 340px; max-width: 92vw; max-height: 85vh;
-      background: var(--bg); border-radius: var(--radius-md) var(--radius-md) 8px 8px;
-      box-shadow: var(--shadow-win); border: 1px solid rgba(255,255,255,0.07);
-      display: none; flex-direction: column; z-index: 100; overflow: hidden;
-      transform-origin: center center; transition: box-shadow 0.15s ease;
-    }
-    .win.open { display: flex; animation: winOpen 0.18s ease-out forwards; }
-    .win:focus-within { box-shadow: var(--shadow-win), 0 0 0 1px rgba(0,255,65,0.12); }
-    @keyframes winOpen { from{opacity:0;transform:scale(0.93)} to{opacity:1;transform:scale(1)} }
-    .win-titlebar {
-      height: 34px;
-      background: linear-gradient(180deg, #2a2a2e 0%, #1c1c1e 100%);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      display: flex; align-items: center; padding: 0 10px; gap: 8px;
-      cursor: move; flex-shrink: 0;
-    }
-    .win-controls { display: flex; gap: 6px; align-items: center; }
-    .win-btn { width: 12px; height: 12px; border-radius: 50%; cursor: pointer; border: none; outline: none; transition: filter 0.15s; position: relative; }
-    .win-btn:hover { filter: brightness(1.3); }
-    .win-btn.close { background: #FF5F57; }
-    .win-btn.min   { background: #FFBD2E; }
-    .win-btn.max   { background: #28C940; }
-    .win-btn.close::after { content:'×'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:9px; color:rgba(0,0,0,0.6); opacity:0; }
-    .win-btn.min::after   { content:'−'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:9px; color:rgba(0,0,0,0.6); opacity:0; }
-    .win-btn.max::after   { content:'+'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:9px; color:rgba(0,0,0,0.6); opacity:0; }
-    .win-controls:hover .win-btn::after { opacity: 1; }
-    .win-title { font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.75); flex: 1; text-align: center; }
-    .win-body {
-      flex: 1; overflow-y: auto; overflow-x: hidden; padding: 18px 20px;
-      background: var(--bg); color: var(--green);
-      font-family: var(--font-mono); font-size: 12px; line-height: 1.75; scroll-behavior: smooth;
-      scrollbar-width: thin; scrollbar-color: var(--surface2) transparent;
-    }
-    .win-body::-webkit-scrollbar { width: 6px; }
-    .win-body::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
-    .win-resize { position: absolute; bottom: 0; right: 0; width: 14px; height: 14px; cursor: se-resize; background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.08) 50%); }
-    @keyframes shake { 0%,100%{transform:translateX(0)} 10%,30%,50%,70%,90%{transform:translateX(-8px)} 20%,40%,60%,80%{transform:translateX(8px)} }
+/* ── COVER ── */
+#cover{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 20px;z-index:2}
+.cover-frame{position:absolute;inset:clamp(16px,3vw,34px);border:1px solid rgba(233,231,228,.15);pointer-events:none}
+.cover-frame::before,.cover-frame::after{content:'';position:absolute;width:14px;height:14px;border-color:rgba(224,38,58,.65);border-style:solid}
+.cover-frame::before{top:-1px;left:-1px;border-width:1px 0 0 1px}
+.cover-frame::after{bottom:-1px;right:-1px;border-width:0 1px 1px 0}
+.cover-k{font-size:clamp(9px,1vw,11px);letter-spacing:.72em;color:var(--red);text-transform:uppercase;margin-bottom:4vh;opacity:0}
+.cover-t{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(54px,13vw,210px);line-height:.92;letter-spacing:.02em;text-shadow:0 8px 60px rgba(0,0,0,.9)}
+.cover-t .row{display:block;overflow:hidden}
+.cover-t .row span{display:block;transform:translateY(115%)}
+.cover-t .row:nth-child(2) span{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.cover-s{font-family:var(--serif);font-style:italic;font-size:clamp(19px,2.5vw,29px);color:var(--dim);margin-top:4.5vh;max-width:40ch;opacity:0}
+.cover-s em{color:var(--red-hi);font-style:italic}
+.cover-meta{margin-top:3.5vh;font-size:9.5px;letter-spacing:.4em;text-transform:uppercase;color:var(--faint);opacity:0}
+.open-cue{position:absolute;bottom:calc(12vh + 24px);left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.5em;color:var(--faint);text-transform:uppercase;opacity:0}
+.open-cue::after{content:'';display:block;width:1px;height:44px;margin:12px auto 0;background:linear-gradient(var(--red),transparent);animation:cue 1.9s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-    .cli-prompt { color: #666; margin-bottom: 4px; }
-    .cli-cmd { color: var(--pink); }
-    .cli-output { color: var(--green); margin-bottom: 20px; }
-    .cli-section-title { color: var(--pink); font-weight: 700; font-size: 13px; margin: 18px 0 6px; border-left: 3px solid var(--pink); padding-left: 8px; text-shadow: 0 0 8px rgba(255,0,102,0.4); }
-    .cli-tree { padding-left: 14px; color: #aaa; line-height: 1.9; font-size: 11.5px; }
-    .cli-tag { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 10px; margin: 2px 3px 2px 0; border: 1px solid; font-family: var(--font-mono); }
-    .cli-tag.green { color: var(--green); border-color: var(--green); background: rgba(0,255,65,0.07); }
-    .cli-tag.pink  { color: var(--pink);  border-color: var(--pink);  background: rgba(255,0,102,0.07); }
-    .cli-tag.cyan  { color: var(--cyan);  border-color: var(--cyan);  background: rgba(0,212,255,0.07); }
-    .cli-link { display: inline-block; padding: 6px 14px; margin: 8px 8px 8px 0; border: 1.5px solid var(--green); color: var(--green); font-family: var(--font-mono); font-size: 11px; text-decoration: none; transition: var(--transition); border-radius: 4px; }
-    .cli-link:hover { background: var(--green); color: #000; box-shadow: 0 0 12px rgba(0,255,65,0.4); }
-    .cli-contact-link { display: inline-block; padding: 10px 20px; margin: 8px 8px 8px 0; border: 2px solid var(--green); background: rgba(0,255,65,0.08); color: var(--green); text-decoration: none; font-family: var(--font-mono); font-size: 12px; transition: var(--transition); border-radius: 4px; }
-    .cli-contact-link:hover { background: var(--pink); border-color: var(--pink); color: #000; box-shadow: 0 0 14px rgba(255,0,102,0.5); }
+/* ── PROLOGUE ── */
+#prologue{position:relative;z-index:2;padding:clamp(100px,18vh,190px) 24px;display:flex;flex-direction:column;align-items:center;background:linear-gradient(180deg,rgba(4,4,5,0),rgba(4,4,5,.86) 12%,rgba(4,4,5,.86) 88%,rgba(4,4,5,0))}
+.pro-label{font-size:10px;letter-spacing:.7em;color:var(--red);text-transform:uppercase;margin-bottom:6vh}
+.pro-text{font-family:var(--serif);font-size:clamp(21px,2.9vw,34px);line-height:1.85;max-width:32ch;color:var(--ink);text-align:center;font-style:italic}
+.pro-text b{color:var(--red-hi);font-weight:500}
+.ledger{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:clamp(28px,5vw,60px);text-align:center;margin-top:12vh;width:min(1100px,92vw)}
+.led-v{font-family:var(--display);font-size:clamp(40px,6vw,88px);line-height:1;color:var(--ink)}
+.led-v em{font-style:normal;color:var(--red)}
+.led-l{font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--faint);margin-top:13px}
 
-    #dock {
-      position: fixed; bottom: 8px; left: 50%; transform: translateX(-50%);
-      height: 62px; background: var(--dock-bg);
-      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-      border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg);
-      padding: 6px 12px; display: flex; align-items: flex-end; gap: 4px; z-index: 4000;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
-    }
-    #dock::before { content:''; position:absolute; top:0; left:10%; right:10%; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent); border-radius:50%; }
-    .dock-item { display:flex; flex-direction:column; align-items:center; position:relative; cursor:pointer; transition:transform 0.15s ease; }
-    .dock-item:hover { transform: translateY(-10px); }
-    .dock-item:hover .dock-icon { font-size: 46px; }
-    .dock-icon { font-size:36px; line-height:1; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5)); transition:font-size 0.15s ease; }
-    .dock-dot { width:4px; height:4px; border-radius:50%; background:transparent; margin-top:2px; transition:background 0.2s; }
-    .dock-dot.active { background:var(--green); box-shadow:0 0 4px var(--green); }
-    .dock-separator { width:1px; height:36px; margin:0 4px; background:rgba(255,255,255,0.15); align-self:center; }
-    .dock-item::before { content:attr(data-tip); position:absolute; bottom:70px; background:rgba(20,20,20,0.92); color:#fff; font-family:var(--font-ui); font-size:11px; font-weight:500; padding:3px 8px; border-radius:5px; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity 0.15s; border:1px solid rgba(255,255,255,0.1); }
-    .dock-item:hover::before { opacity:1; }
-    @keyframes dockBounce { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-18px)} 60%{transform:translateY(-8px)} }
-    .dock-item.bouncing { animation:dockBounce 0.55s ease; }
+/* ── CHAPTERS ── */
+.chapter{position:relative;z-index:2}
+.ch-card{position:sticky;top:0;height:100vh;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;overflow:hidden}
+.ch-card-in{will-change:transform,opacity}
+.ch-roman{font-family:var(--serif);font-size:clamp(120px,26vw,380px);line-height:1;font-weight:500;color:transparent;-webkit-text-stroke:1px rgba(233,231,228,.14);position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);z-index:-1;user-select:none}
+.ch-label{font-size:10px;letter-spacing:.72em;color:var(--acc);text-transform:uppercase}
+.ch-name{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(48px,10.5vw,160px);line-height:.95;margin:3vh 0;text-shadow:0 6px 50px rgba(0,0,0,.9)}
+.ch-name .w{display:inline-block;overflow:hidden;vertical-align:top}
+.ch-name .w i{display:inline-block;font-style:normal;transform:translateY(112%)}
+.ch-line{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.2vw,26px);color:var(--dim);max-width:44ch}
+.ch-orn{margin-top:5vh;font-family:var(--serif);font-size:18px;color:var(--acc);letter-spacing:1.2em;padding-left:1.2em}
 
-    #win-terminal .win-body { padding:0; display:flex; flex-direction:column; background:#0a0a0a; }
-    .term-output { flex:1; overflow-y:auto; overflow-x:hidden; padding:12px 16px; font-family:var(--font-mono); font-size:13px; color:var(--green); line-height:1.75; scrollbar-width:thin; scrollbar-color:var(--surface2) transparent; }
-    .term-output::-webkit-scrollbar { width:5px; }
-    .term-output::-webkit-scrollbar-thumb { background:var(--surface2); border-radius:3px; }
-    .term-line { margin-bottom:2px; word-break:break-word; }
-    .term-input-row { display:flex; align-items:center; padding:8px 16px; gap:6px; background:#080808; border-top:1px solid var(--surface2); flex-shrink:0; }
-    .term-prompt-label { color:var(--pink); font-family:var(--font-mono); font-size:13px; white-space:nowrap; }
-    .term-input { flex:1; background:transparent; border:none; outline:none; color:var(--green); font-family:var(--font-mono); font-size:13px; caret-color:var(--green); }
-    .term-input::placeholder { color:rgba(0,255,65,0.3); }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-    .t-cmd  { color:var(--pink); }
-    .t-path { color:#4ec9b0; }
-    .t-dim  { color:#555; }
-    .t-warn { color:#ffbd2e; }
-    .t-err  { color:#ff5f57; }
-    .t-good { color:var(--green); }
+.ch-page{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:16vh clamp(22px,8vw,120px);background:linear-gradient(180deg,rgba(4,4,5,0) 0%,rgba(4,4,5,.92) 9%,rgba(4,4,5,.92) 91%,rgba(4,4,5,0) 100%)}
+.ch-page-in{max-width:880px}
+.chapter.right .ch-page-in{margin-left:auto;text-align:right}
+.pg-k{font-size:10px;letter-spacing:.44em;color:var(--acc);text-transform:uppercase}
+.pg-stat{font-family:var(--display);font-size:clamp(52px,9vw,140px);color:var(--acc);line-height:.95;margin:3vh 0;text-shadow:0 0 60px color-mix(in srgb,var(--acc) 38%,transparent)}
+.pg-stat small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.34em;color:var(--faint);text-transform:uppercase;margin-top:14px;text-shadow:none}
+.pg-story{font-family:var(--serif);font-size:clamp(19px,2.4vw,28px);line-height:1.8;color:var(--dim);max-width:46ch}
+.chapter.right .pg-story{margin-left:auto}
+.pg-story b{color:var(--ink);font-weight:500}
+.pg-story::first-letter{font-family:var(--serif);font-size:3.1em;line-height:.8;float:left;padding:8px 12px 0 0;color:var(--acc);font-style:normal;font-weight:600}
+.chapter.right .pg-story::first-letter{float:none;padding:0;font-size:1em;color:inherit;font-weight:inherit}
+.pg-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:4vh}
+.chapter.right .pg-tags{justify-content:flex-end}
+.tag{font-size:9.5px;letter-spacing:.14em;color:var(--dim);border:1px solid var(--hair);padding:4px 12px;border-radius:2px;text-transform:uppercase}
+.pg-link{display:inline-block;margin-top:4vh;font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--acc);padding-bottom:6px;transition:color .25s,letter-spacing .3s}
+.pg-link:hover{color:var(--acc-hi);letter-spacing:.44em}
+[data-accent="mono"] .pg-stat{text-shadow:none}
+[data-accent="mono"] .ch-label,[data-accent="mono"] .pg-k{color:var(--dim)}
 
-    .hacker-text { font-size:26px; margin:8px 0; color:var(--green); text-shadow:0 0 20px var(--green); animation:glitch 0.3s infinite; }
-    @keyframes glitch { 0%,100%{transform:translate(0)} 20%{transform:translate(-2px,2px)} 40%{transform:translate(-2px,-2px)} 60%{transform:translate(2px,2px)} 80%{transform:translate(2px,-2px)} }
+/* ── INTERLUDE ── */
+.interlude{position:relative;z-index:2;min-height:85vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16vh 24px;background:linear-gradient(180deg,rgba(4,4,5,0),rgba(4,4,5,.8) 20%,rgba(4,4,5,.8) 80%,rgba(4,4,5,0))}
+.int-hi{font-family:var(--serif);font-style:italic;font-size:clamp(24px,4.2vw,52px);line-height:1.75;max-width:26ch;color:var(--ink)}
+.int-en{margin-top:4vh;font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--faint);line-height:2.2}
 
-    @media (max-width: 768px) {
-      #desktop { padding:12px 8px; gap:8px; bottom:70px; }
-      .desktop-icon { width:60px; }
-      .icon-img { font-size:34px; }
-      .icon-label { font-size:9px; }
-      .win { width:96vw !important; height:88vh !important; min-width:0 !important; left:2vw !important; top:26px !important; }
-      .win-resize { display:none; }
-      #dock { height:52px; padding:4px 8px; gap:2px; bottom:4px; }
-      .dock-item:hover { transform:none; }
-      .dock-item:hover .dock-icon { font-size:36px; }
-      .dock-icon { font-size:32px; }
-      .dock-item::before { display:none; }
-      #win-terminal { width:100vw !important; height:55vh !important; left:0 !important; bottom:56px !important; top:auto !important; border-radius:12px 12px 0 0; }
-    }
-  </style>
+/* ── EXPERIENCE ── */
+.xp{display:grid;grid-template-columns:minmax(120px,210px) 1fr auto;gap:clamp(16px,4vw,56px);align-items:baseline;padding:clamp(32px,5.5vh,52px) 0;border-top:1px solid var(--hair)}
+.xp:last-of-type{border-bottom:1px solid var(--hair)}
+.xp-when{font-size:10px;letter-spacing:.26em;color:var(--acc);text-transform:uppercase}
+.xp-role{font-family:var(--display);font-size:clamp(23px,3.8vw,48px);text-transform:uppercase;line-height:1.05}
+.xp-org{font-family:var(--serif);font-style:italic;font-size:clamp(15px,1.8vw,20px);color:var(--dim);margin-top:9px}
+.xp-fact{font-family:var(--display);font-size:clamp(20px,2.6vw,36px);color:var(--acc);text-align:right;line-height:1.1}
+.xp-fact small{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.3em;color:var(--faint);text-transform:uppercase;margin-top:9px}
+@media(max-width:820px){.xp{grid-template-columns:1fr}.xp-fact{text-align:left}}
+
+/* ── RECORD ── */
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(36px,5vw,64px);margin-top:clamp(46px,8vh,80px);text-align:center}
+.rec-v{font-family:var(--display);font-size:clamp(46px,7vw,100px);line-height:1;color:var(--ink)}
+.rec-v em{font-style:normal;color:var(--acc)}
+.rec-l{font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--faint);margin-top:15px;line-height:2}
+
+/* ── MARQUEE ── */
+.marquee{position:relative;z-index:2;overflow:hidden;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:20px 0;white-space:nowrap;background:rgba(4,4,5,.9)}
+.marquee+.marquee{border-top:none}
+.mq{display:inline-block;animation:mq 42s linear infinite}
+.marquee.rev .mq{animation-direction:reverse}
+.mq span{font-family:var(--display);font-size:clamp(17px,2.2vw,30px);text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin:0 24px}
+.mq span.g{color:var(--red)}
+.marquee.rev .mq span.g{color:var(--steel)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── EPILOGUE ── */
+#epilogue{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16vh 20px;background:linear-gradient(180deg,rgba(4,4,5,0),rgba(4,4,5,.85) 18%,rgba(4,4,5,.85))}
+.ep-k{font-size:10px;letter-spacing:.72em;color:var(--red);text-transform:uppercase}
+.ep-t{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(54px,12vw,180px);line-height:.94;margin:3.5vh 0;text-shadow:0 8px 60px rgba(0,0,0,.9)}
+.ep-t .ghosted{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.ep-s{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.2vw,26px);color:var(--dim);max-width:38ch}
+.ep-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:6vh}
+.ep-btn{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;color:var(--ink);border:1px solid var(--hair);padding:17px 34px;position:relative;overflow:hidden;transition:color .25s,border-color .25s;z-index:1}
+.ep-btn::before{content:'';position:absolute;inset:0;background:var(--steel);transform:translateY(101%);transition:transform .32s cubic-bezier(.2,.75,.15,1);z-index:-1}
+.ep-btn:hover{color:#000;border-color:var(--steel)}
+.ep-btn:hover::before{transform:translateY(0)}
+.ep-btn.pri{border-color:var(--red);color:var(--red-hi)}
+.ep-btn.pri::before{background:var(--red)}
+.ep-btn.pri:hover{color:#fff;border-color:var(--red)}
+.ep-credits{margin-top:9vh;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--faint);line-height:2.8}
+.ep-credits b{color:var(--dim);font-weight:500}
+.fin{font-family:var(--serif);font-style:italic;font-size:clamp(22px,3vw,34px);color:var(--dim);margin-top:7vh}
+footer{position:relative;z-index:2;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:24px clamp(20px,6vw,90px);border-top:1px solid var(--hair);font-size:9px;letter-spacing:.24em;color:var(--faint);text-transform:uppercase;background:rgba(4,4,5,.9)}
+
+.rv{opacity:0;transform:translateY(60px)}
+</style>
 </head>
-<body>
-  <div id="menubar">
-    <div class="menubar-left">
-      <span class="menu-apple">&#63743;</span>
-      <span class="menu-app">Finder</span>
-      <span class="menu-item">File</span>
-      <span class="menu-item">Edit</span>
-      <span class="menu-item">View</span>
-      <span class="menu-item">Go</span>
-      <span class="menu-item">Window</span>
+<body class="boot">
+
+<div id="gate">
+  <button id="riddle" aria-label="Enter the experience">
+    <span class="rq">&lt;<i>?</i>&gt;</span>
+  </button>
+  <div id="type-line"><span id="typed"></span><span class="caret"></span></div>
+</div>
+<div id="grain"></div>
+<div class="bar" id="bar-top"></div>
+<div class="bar" id="bar-bottom"></div>
+<div id="progress"></div>
+
+<nav>
+  <a class="nav-mark" href="#cover">RM</a>
+  <div class="nav-links">
+    <a href="#prologue">Prologue</a>
+    <a href="#ch1">Chapters</a>
+    <a href="#crossing">The Crossing</a>
+    <a href="#record">The Record</a>
+    <a href="#epilogue">Epilogue</a>
+  </div>
+  <div class="nav-right">
+    <button id="sound" aria-label="Toggle sound"><span class="eq"><i></i><i></i><i></i></span><span id="sound-label">Sound</span></button>
+    <div id="timecode">00:00:00:00</div>
+  </div>
+</nav>
+
+<video id="bgvid" autoplay muted loop playsinline preload="auto"></video>
+<div id="vid-shade"></div>
+<canvas id="gl"></canvas>
+
+<!-- ════════ COVER ════════ -->
+<header id="cover" data-accent="crimson" data-mood="crimson">
+  <div class="cover-frame"></div>
+  <div class="cover-k">A story in seven chapters</div>
+  <h1 class="cover-t">
+    <span class="row"><span>Rajvansh</span></span>
+    <span class="row"><span>Malhotra</span></span>
+  </h1>
+  <p class="cover-s">An engineer happiest <em>deep inside a problem</em> — curious, open, and always reaching for <em>something greater</em>.</p>
+  <div class="cover-meta">Machine Learning Engineer · Delhi, India · NIT Kurukshetra</div>
+  <div class="open-cue">Open</div>
+</header>
+
+<!-- ════════ PROLOGUE ════════ -->
+<section id="prologue" data-mood="steel">
+  <div class="pro-label rv">Prologue</div>
+  <p class="pro-text rv">I like to move in with a problem — take it apart piece by piece, and keep looking until an unexpected door opens. Seven chapters of that curiosity in action: <b>I am in love with this work.</b></p>
+  <div class="ledger">
+    <div class="rv"><div class="led-v">46<em>→</em>8<em>s</em></div><div class="led-l">Voice AI latency</div></div>
+    <div class="rv"><div class="led-v">Top <em>2.8%</em></div><div class="led-l">Amazon ML Challenge</div></div>
+    <div class="rv"><div class="led-v"><em>3</em> Agents</div><div class="led-l">Built from scratch</div></div>
+    <div class="rv"><div class="led-v"><em>300+</em></div><div class="led-l">Problems solved</div></div>
+  </div>
+</section>
+
+<!-- ════════ CHAPTER I — CRIMSON ════════ -->
+<section class="chapter left" id="ch1" data-accent="crimson">
+  <div class="ch-card" data-mood="crimson">
+    <div class="ch-card-in">
+      <div class="ch-roman">I</div>
+      <div class="ch-label">Chapter One · Jul 2026</div>
+      <h2 class="ch-name" data-split>The City</h2>
+      <p class="ch-line">— in which 298,443 violations confess where the traffic will break next</p>
+      <div class="ch-orn">✦ ✦ ✦</div>
     </div>
-    <div class="menubar-right">
-      <span class="menu-icon">&#8999;</span>
-      <span class="menu-icon">&#9654;</span>
-      <span id="menubar-clock"></span>
+  </div>
+  <div class="ch-page">
+    <div class="ch-page-in">
+      <div class="pg-k rv">BLR Parking Intelligence · Flipkart Gridlock Hackathon</div>
+      <div class="pg-stat rv">298,443<small>GPS records · fact-checked at zero perceived latency</small></div>
+      <p class="pg-story rv">Bengaluru's parking chaos, ranked by physics: LambdaRank labels grounded in kinematic-wave theory, hotspots matched across time by the Hungarian algorithm, answers streamed by Qwen3-8B over a hybrid RAG corpus — then judged by a <b>jury of three models</b> after the stream closed, so verification cost the listener nothing.</p>
+      <div class="pg-tags rv"><span class="tag">LightGBM</span><span class="tag">Hybrid RAG</span><span class="tag">Qwen3-8B</span><span class="tag">OSRM</span><span class="tag">RLHF Loop</span></div>
+      <a class="pg-link rv" href="https://github.com/RajvanshMalhotra" target="_blank" rel="noopener">Read the source →</a>
     </div>
   </div>
-  <div id="desktop">
-    <div class="desktop-icon" data-target="about"><div class="icon-img">&#128193;</div><div class="icon-label">About.me</div></div>
-    <div class="desktop-icon" data-target="projects"><div class="icon-img">&#128193;</div><div class="icon-label">Projects</div></div>
-    <div class="desktop-icon" data-target="experience"><div class="icon-img">&#128193;</div><div class="icon-label">Experience</div></div>
-    <div class="desktop-icon" data-target="achievements"><div class="icon-img">&#128193;</div><div class="icon-label">Achievements</div></div>
-    <div class="desktop-icon" data-target="skills"><div class="icon-img">&#128193;</div><div class="icon-label">Skills</div></div>
-    <div class="desktop-icon" data-target="contact"><div class="icon-img">&#128193;</div><div class="icon-label">Contact</div></div>
-    <div class="desktop-icon" data-target="resume"><div class="icon-img">&#128196;</div><div class="icon-label">Resume.pdf</div></div>
-  </div>
-  <div class="win" id="win-about"        data-title="📁 About.me"       style="left:15%;top:12%"></div>
-  <div class="win" id="win-projects"     data-title="📁 Projects"        style="left:18%;top:10%"></div>
-  <div class="win" id="win-experience"   data-title="📁 Experience"      style="left:20%;top:14%"></div>
-  <div class="win" id="win-achievements" data-title="📁 Achievements"    style="left:22%;top:11%"></div>
-  <div class="win" id="win-skills"       data-title="📁 Skills"          style="left:24%;top:13%"></div>
-  <div class="win" id="win-contact"      data-title="📁 Contact"         style="left:16%;top:15%"></div>
-  <div class="win" id="win-terminal"     data-title="💻 Terminal — rajvansh@mainframe: ~/desktop" style="left:10%;top:8%"></div>
-  <div id="dock">
-    <div class="dock-item" data-target="about"    data-tip="Finder"><div class="dock-icon">&#128193;</div><div class="dock-dot" id="dot-about"></div></div>
-    <div class="dock-item" data-target="projects"  data-tip="Projects"><div class="dock-icon">&#128640;</div><div class="dock-dot" id="dot-projects"></div></div>
-    <div class="dock-item" data-target="terminal"  data-tip="Terminal"><div class="dock-icon">&#128187;</div><div class="dock-dot" id="dot-terminal"></div></div>
-    <div class="dock-separator"></div>
-    <div class="dock-item" data-target="resume"    data-tip="Resume"><div class="dock-icon">&#11088;</div><div class="dock-dot"></div></div>
-    <div class="dock-item" data-url="https://github.com/RajvanshMalhotra" data-tip="GitHub"><div class="dock-icon">&#128025;</div><div class="dock-dot"></div></div>
-    <div class="dock-item" data-target="contact"   data-tip="Contact"><div class="dock-icon">&#128140;</div><div class="dock-dot" id="dot-contact"></div></div>
-  </div>
-  <canvas id="matrix-bg" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:0;pointer-events:none;display:none;transition:opacity 0.5s;"></canvas>
-  <div id="joker-overlay" style="position:fixed;inset:0;background:#000;z-index:20000;display:none;align-items:center;justify-content:center;">
-    <img src="./assets/joker.gif" alt="Why so serious?" style="max-width:100%;max-height:100%;object-fit:contain;">
-  </div>
-  <div id="hacker-exit" style="position:fixed;inset:0;background:#000;z-index:25000;display:none;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-mono);">
-    <canvas id="exit-matrix" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.3;"></canvas>
-    <div style="position:relative;z-index:1;text-align:center;">
-      <div class="hacker-text">CONNECTION TERMINATED</div>
-      <div class="hacker-text" style="animation-delay:0.3s">CLEARING TRACES...</div>
-      <div class="hacker-text" style="animation-delay:0.6s">WIPING MEMORY...</div>
-      <div class="hacker-text" style="margin-top:30px;font-size:18px;animation-delay:1s">See you in the shadows...</div>
+</section>
+
+<!-- ════════ CHAPTER II — STEEL ════════ -->
+<section class="chapter right" data-accent="steel">
+  <div class="ch-card" data-mood="steel">
+    <div class="ch-card-in">
+      <div class="ch-roman">II</div>
+      <div class="ch-label">Chapter Two · Jul 2026</div>
+      <h2 class="ch-name" data-split>The Voice</h2>
+      <p class="ch-line">— in which thirty-three seconds are cut to five, in two tongues</p>
+      <div class="ch-orn">✦ ✦ ✦</div>
     </div>
   </div>
-  <!-- Loading Screen -->
-  <div id="loading-screen">
-    <canvas id="loading-matrix"></canvas>
-    <div class="loading-content">
-      <div class="loading-text">SOMEONE IS CURIOUS...</div>
-      <div class="loading-bar"><div class="loading-fill" id="loading-fill"></div></div>
-      <div class="loading-status" id="loading-status">Initializing system...</div>
+  <div class="ch-page">
+    <div class="ch-page-in">
+      <div class="pg-k rv">Yojana AI · Bilingual Voice RAG</div>
+      <div class="pg-stat rv">33s → &lt;5s<small>End-to-end · perceived audio 20s → ~2s</small></div>
+      <p class="pg-story rv">A voice that helps citizens find welfare schemes in Hindi or English. Three serial bottlenecks diagnosed and resolved: auxiliary calls rerouted to an 800-token-per-second model, four preprocessing calls collapsed into one, and <b>TTS fired per sentence as tokens arrived</b> — 2.82 seconds of combined wall time.</p>
+      <div class="pg-tags rv"><span class="tag">Groq</span><span class="tag">Streaming TTS</span><span class="tag">Firecrawl</span><span class="tag">Gemini 2.5</span></div>
+      <a class="pg-link rv" href="https://github.com/RajvanshMalhotra" target="_blank" rel="noopener">Read the source →</a>
     </div>
   </div>
-  <script>
-    // ── Loading Screen ──
-    const loadingCanvas = document.getElementById('loading-matrix');
-    const lCtx = loadingCanvas.getContext('2d');
-    function resizeLoadingCanvas() {
-      loadingCanvas.width = window.innerWidth;
-      loadingCanvas.height = window.innerHeight;
-    }
-    resizeLoadingCanvas();
-    window.addEventListener('resize', resizeLoadingCanvas);
+</section>
 
-    const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
-    const fontSize = 14;
-    let lDrops = [];
-    function initLoadingDrops() {
-      const cols = Math.floor(loadingCanvas.width / fontSize);
-      lDrops = Array(cols).fill(1);
-    }
-    initLoadingDrops();
+<!-- ════════ CHAPTER III — MONO ════════ -->
+<section class="chapter left" data-accent="mono">
+  <div class="ch-card" data-mood="mono">
+    <div class="ch-card-in">
+      <div class="ch-roman">III</div>
+      <div class="ch-label">Chapter Three · May 2026 · Rumik AI Hackathon — Top 50</div>
+      <h2 class="ch-name" data-split>The Storm</h2>
+      <p class="ch-line">— in which twelve optimizations silence a forty-six second wait</p>
+      <div class="ch-orn">✦ ✦ ✦</div>
+    </div>
+  </div>
+  <div class="ch-page">
+    <div class="ch-page-in">
+      <div class="pg-k rv">Awaaz · Voice AI</div>
+      <div class="pg-stat rv">46s → &lt;8s<small>First audio chunk · −60% output tokens</small></div>
+      <p class="pg-story rv">Profiled the whole pipeline and eliminated twelve bottlenecks, one by one. Inference decoupled from speaker identification, TLS handshakes erased by a persistent client, and the architecture rebuilt around <b>WebSocket streaming</b> — tokens flowing from LLM through live speech synthesis straight into the listener's ears.</p>
+      <div class="pg-tags rv"><span class="tag">asyncio</span><span class="tag">WebSocket</span><span class="tag">Sarvam STT</span><span class="tag">httpx</span></div>
+      <a class="pg-link rv" href="https://github.com/RajvanshMalhotra" target="_blank" rel="noopener">Read the source →</a>
+    </div>
+  </div>
+</section>
 
-    function drawLoadingMatrix() {
-      lCtx.fillStyle = 'rgba(0,0,0,0.05)';
-      lCtx.fillRect(0, 0, loadingCanvas.width, loadingCanvas.height);
-      lCtx.fillStyle = '#00FF41';
-      lCtx.font = fontSize + 'px monospace';
-      lDrops.forEach((y, i) => {
-        lCtx.fillText(matrixChars[Math.floor(Math.random() * matrixChars.length)], i * fontSize, y * fontSize);
-        if (y * fontSize > loadingCanvas.height && Math.random() > 0.975) lDrops[i] = 0;
-        lDrops[i]++;
-      });
-    }
-    const loadingMatrixInterval = setInterval(drawLoadingMatrix, 45);
+<!-- ════════ CHAPTER IV — CRIMSON ════════ -->
+<section class="chapter right" data-accent="crimson">
+  <div class="ch-card" data-mood="crimson">
+    <div class="ch-card-in">
+      <div class="ch-roman">IV</div>
+      <div class="ch-label">Chapter Four · Mar 2026 · IEEE Research</div>
+      <h2 class="ch-name" data-split>The Fire</h2>
+      <p class="ch-line">— in which physics is written into the loss, and burns on a five-dollar chip</p>
+      <div class="ch-orn">✦ ✦ ✦</div>
+    </div>
+  </div>
+  <div class="ch-page">
+    <div class="ch-page-in">
+      <div class="pg-k rv">Battery Health RPNN · Physics-Informed ML</div>
+      <div class="pg-stat rv">0 Cloud<small>Real-time SOC/SOH · ESP32 · C++ TinyML</small></div>
+      <p class="pg-story rv">Coulomb-counting differential equations embedded directly into the training loss — data-driven MSE, an ODE residual by automatic differentiation, and hard boundaries pinning state-of-charge to reality. Then the whole network compressed into a <b>C++ TinyML engine</b>, running safety-critical diagnostics with no server in the loop.</p>
+      <div class="pg-tags rv"><span class="tag">PINN</span><span class="tag">PyTorch</span><span class="tag">ESP32</span><span class="tag">AdamW λ=0.1</span></div>
+      <a class="pg-link rv" href="https://github.com/RajvanshMalhotra" target="_blank" rel="noopener">Read the source →</a>
+    </div>
+  </div>
+</section>
 
-    const loadingMessages = [
-      'Initializing system...',
-      'Loading neural networks...',
-      'Caffeinating AI models...',
-      'Compiling achievements...',
-      'System ready.'
-    ];
-    let loadPct = 0;
-    const loadInterval = setInterval(() => {
-      loadPct = Math.min(loadPct + Math.random() * 22, 100);
-      document.getElementById('loading-fill').style.width = loadPct + '%';
-      const idx = Math.min(Math.floor((loadPct / 100) * loadingMessages.length), loadingMessages.length - 1);
-      document.getElementById('loading-status').textContent = loadingMessages[idx];
-      if (loadPct >= 100) {
-        clearInterval(loadInterval);
-        clearInterval(loadingMatrixInterval);
-        setTimeout(() => {
-          document.getElementById('loading-screen').classList.add('hidden');
-          setTimeout(() => document.getElementById('loading-screen').remove(), 900);
-        }, 600);
-      }
-    }, 280);
+<!-- ════════ CHAPTER V — STEEL ════════ -->
+<section class="chapter left" data-accent="steel">
+  <div class="ch-card" data-mood="steel">
+    <div class="ch-card-in">
+      <div class="ch-roman">V</div>
+      <div class="ch-label">Chapter Five · Feb 2026</div>
+      <h2 class="ch-name" data-split>The Watchers</h2>
+      <p class="ch-line">— in which three agents keep vigil over the sky</p>
+      <div class="ch-orn">✦ ✦ ✦</div>
+    </div>
+  </div>
+  <div class="ch-page">
+    <div class="ch-page-in">
+      <div class="pg-k rv">Gotham Orbital · Agentic Satellite Intelligence</div>
+      <div class="pg-stat rv">3 Agents<small>ATLAS · ORBITAL-1 · ANALYST-1</small></div>
+      <p class="pg-story rv">A custom agentic library — optimum_ReAct — engineered from nothing, inspired by Palantir's Gotham. Its memory is hybrid: BM25, semantic search, and a <b>weighted knowledge graph</b> that forgets the way people do — by importance, recency, and connection. Deployed on AWS with Docker and full CI/CD.</p>
+      <div class="pg-tags rv"><span class="tag">optimum_ReAct</span><span class="tag">BM25</span><span class="tag">Knowledge Graph</span><span class="tag">AWS EC2</span></div>
+      <a class="pg-link rv" href="https://github.com/RajvanshMalhotra/optimum_ReAct" target="_blank" rel="noopener">Read the source →</a>
+    </div>
+  </div>
+</section>
 
-    let selectedIcon = null;
-    document.querySelectorAll('.desktop-icon').forEach(icon => {
-      icon.addEventListener('click', e => {
-        e.stopPropagation();
-        if (selectedIcon) selectedIcon.classList.remove('selected');
-        icon.classList.add('selected');
-        selectedIcon = icon;
-      });
-      icon.addEventListener('dblclick', () => {
-        const target = icon.dataset.target;
-        if (target === 'resume') { openResume(); }
-        else { openWindow(target); }
-      });
-    });
-    document.getElementById('desktop').addEventListener('click', e => {
-      if (e.target === e.currentTarget && selectedIcon) {
-        selectedIcon.classList.remove('selected'); selectedIcon = null;
-      }
-    });
-    function openResume() {
-      const a = document.createElement('a');
-      a.href = './assets/resume.pdf';
-      a.target = '_blank';
-      a.rel = 'noopener';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
+<!-- ════════ CHAPTER VI — MONO ════════ -->
+<section class="chapter right" data-accent="mono">
+  <div class="ch-card" data-mood="mono">
+    <div class="ch-card-in">
+      <div class="ch-roman">VI</div>
+      <div class="ch-label">Chapter Six · Jun 2025</div>
+      <h2 class="ch-name" data-split>The Apprentice</h2>
+      <p class="ch-line">— in which a language model learns to speak on borrowed hardware</p>
+      <div class="ch-orn">✦ ✦ ✦</div>
+    </div>
+  </div>
+  <div class="ch-page">
+    <div class="ch-page-in">
+      <div class="pg-k rv">Rizzler · LLM Fine-Tuning</div>
+      <div class="pg-stat rv">4-bit · r=64<small>QLoRA via Unsloth · q_proj / v_proj</small></div>
+      <p class="pg-story rv">Meta's LLaMA-3 8B, taught conversation on hardware that shouldn't allow it — <b>QLoRA with 4-bit quantization</b>, adapters on the attention projections, and generation tuned through temperature and top-p sweeps.</p>
+      <div class="pg-tags rv"><span class="tag">LLaMA-3 8B</span><span class="tag">QLoRA</span><span class="tag">Unsloth</span></div>
+      <a class="pg-link rv" href="https://github.com/RajvanshMalhotra/rizzler" target="_blank" rel="noopener">Access the weights →</a>
+    </div>
+  </div>
+</section>
 
-    let zTop = 200;
+<!-- ════════ INTERLUDE ════════ -->
+<div class="interlude" data-mood="steel">
+  <p class="int-hi rv">&ldquo;किसी चीज़ को शिद्दत से चाहो<br>तो पूरी कायनात तुम्हें उससे<br>मिलाने में लग जाती है&rdquo;</p>
+  <p class="int-en rv">Want something badly enough, and the universe conspires to deliver it</p>
+</div>
 
-    function buildWindow(id) {
-      const el = document.getElementById('win-' + id);
-      if (!el) return;
-      if (el.querySelector('.win-titlebar')) return;
-      const title = el.dataset.title || id;
-      el.innerHTML = `
-        <div class="win-titlebar">
-          <div class="win-controls">
-            <button class="win-btn close" onclick="closeWindow('${id}')"></button>
-            <button class="win-btn min"   onclick="minimiseWindow('${id}')"></button>
-            <button class="win-btn max"   onclick="maximiseWindow('${id}')"></button>
-          </div>
-          <div class="win-title">${title}</div>
+<!-- ════════ CHAPTER VII — THE CROSSING ════════ -->
+<section class="chapter left" id="crossing" data-accent="crimson">
+  <div class="ch-card" data-mood="crimson">
+    <div class="ch-card-in">
+      <div class="ch-roman">VII</div>
+      <div class="ch-label">Chapter Seven</div>
+      <h2 class="ch-name" data-split>The Crossing</h2>
+      <p class="ch-line">— in which the work leaves the lab and meets the world</p>
+      <div class="ch-orn">✦ ✦ ✦</div>
+    </div>
+  </div>
+  <div class="ch-page">
+    <div style="width:100%">
+      <article class="xp rv">
+        <div class="xp-when">Mar — May 2025</div>
+        <div>
+          <h3 class="xp-role">AI/ML Intern</h3>
+          <p class="xp-org">Samvedya AI × AIIMS Delhi — RAG for clinical visual abstracts</p>
         </div>
-        <div class="win-body" id="wbody-${id}"></div>
-        <div class="win-resize"></div>
-      `;
-      makeDraggable(el);
-      makeResizable(el);
-      if (id === 'terminal') setTimeout(() => buildTerminalBody(el), 0);
-    }
-
-    function openWindow(id) {
-      buildWindow(id);
-      const el = document.getElementById('win-' + id);
-      if (!el) return;
-      el.classList.add('open');
-      bringToFront(el);
-      const pos = {about:['15%','12%'],projects:['18%','10%'],experience:['20%','14%'],achievements:['22%','11%'],skills:['24%','13%'],contact:['16%','15%'],terminal:['10%','8%']};
-      if (pos[id] && !el.dataset.positioned) { el.style.left=pos[id][0]; el.style.top=pos[id][1]; el.dataset.positioned='1'; }
-      populateWindow(id);
-      updateDockDot(id, true);
-    }
-
-    function closeWindow(id) {
-      const el = document.getElementById('win-' + id);
-      if (el) { el.classList.remove('open'); el.removeAttribute('data-minimised'); }
-      updateDockDot(id, false);
-    }
-
-    function minimiseWindow(id) {
-      const el = document.getElementById('win-' + id);
-      if (!el) return;
-      el.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
-      el.style.transform = 'scale(0.1) translateY(400px)';
-      el.style.opacity = '0';
-      setTimeout(() => {
-        el.classList.remove('open'); el.style.transform=''; el.style.opacity=''; el.style.transition=''; el.dataset.minimised='1';
-      }, 200);
-    }
-
-    function maximiseWindow(id) {
-      const el = document.getElementById('win-' + id);
-      if (!el) return;
-      if (el.dataset.maximised) {
-        el.style.left=el.dataset.prevLeft; el.style.top=el.dataset.prevTop;
-        el.style.width=el.dataset.prevW; el.style.height=el.dataset.prevH;
-        delete el.dataset.maximised;
-      } else {
-        el.dataset.prevLeft=el.style.left; el.dataset.prevTop=el.style.top;
-        el.dataset.prevW=el.style.width; el.dataset.prevH=el.style.height;
-        el.style.left='0'; el.style.top='26px'; el.style.width='100vw'; el.style.height='calc(100vh - 104px)';
-        el.dataset.maximised='1';
-      }
-    }
-
-    function bringToFront(el) { zTop++; el.style.zIndex = zTop; }
-    document.querySelectorAll('.win').forEach(w => w.addEventListener('mousedown', () => bringToFront(w)));
-
-    const windowContent = {
-      about: `<div class="cli-prompt">┌─[rajvansh@mainframe]─[~/about]<br>└──╼ $ <span class="cli-cmd">cat intro.txt</span></div><div class="cli-output"><div>&gt; <span class="cli-tag cyan">Rajvansh Malhotra</span></div><div>&gt; B.Tech Computer Engineering — NIT Kurukshetra (Aug 2023 – Jun 2027)</div><div>&gt; ML Engineer | AGI Researcher | Builder</div><br><div>&gt; Currently: scalable agentic AI + efficient LLM fine-tuning</div><br><div class="cli-prompt">└──╼ $ <span class="cli-cmd">cat philosophy.txt</span></div><div style="margin-top:8px;line-height:2.1;color:#ccc;">&gt; &quot;किसी चीज़ को शिद्दत से चाहो तो पूरी कायनात<br>&nbsp;&nbsp;&nbsp;तुम्हें उससे मिलाने में लग जाती है&quot;<br><br>&gt; Translation: When you want something badly enough,<br>&nbsp;&nbsp;the entire universe conspires to help you achieve it.<br><br>&gt; Mission: Learning and implementing.</div></div>`,
-
-      projects: `<div class="cli-prompt">┌─[rajvansh@mainframe]─[~/projects]<br>└──╼ $ <span class="cli-cmd">ls -la</span></div><div class="cli-output"><div class="cli-section-title">AWAAZ/</div><div class="cli-tree"><div>├── event: <span style="color:#fff">Rumik AI Hackathon</span> <span class="cli-tag green">TOP 50</span> <span class="cli-tag pink">May 2026</span></div><div>├── feat: Reduced voice AI latency <span class="cli-tag green">46s → &lt;3s</span> (93% faster)</div><div>├── perf: Persistent httpx.AsyncClient → eliminated 400ms TLS overhead/req</div><div>├── optim: LLM token usage 512 → 200 tokens <span class="cli-tag green">−60%</span></div><div>├── arch: asyncio.gather · WebSocket streaming · Web Audio API</div><div>└── stt: Replaced Groq Whisper → Sarvam Saaras v3 Codemix (Hinglish accuracy ▲)</div></div><a href="https://github.com/RajvanshMalhotra" target="_blank" class="cli-link">[SOURCE_CODE]</a><div class="cli-section-title">GOTHAM_ORBITAL/</div><div class="cli-tree"><div>├── type: <span style="color:#fff">Agentic Satellite Intelligence Platform</span> <span class="cli-tag pink">Feb 2026</span></div><div>├── agents: 3 concurrent LLM agents (ATLAS · ORBITAL-1 · ANALYST-1)</div><div>├── memory: HybridMemory — BM25 + sentence-transformer + weighted knowledge graph</div><div>├── infra: AWS EC2 · Docker · GitHub Actions CI/CD</div><div>└── lib: custom optimum_ReAct built from scratch, inspired by Palantir Gotham</div></div><a href="https://github.com/RajvanshMalhotra/optimum_ReAct" target="_blank" class="cli-link">[SOURCE_CODE]</a><div class="cli-section-title">BATTERY_RPNN/</div><div class="cli-tree"><div>├── type: <span style="color:#fff">Physics-Informed Residual Neural Network</span> <span class="cli-tag cyan">IEEE Research · Mar 2026</span></div><div>├── deploy: ESP32 microcontroller — real-time SOC/SOH estimation, no cloud</div><div>├── loss: MSE + ODE physics residual (autodiff) + boundary constraints, AdamW λ=0.1</div><div>└── export: PyTorch RPNN → C++ TinyML engine (automotive safety-critical)</div></div><a href="https://github.com/RajvanshMalhotra" target="_blank" class="cli-link">[SOURCE_CODE]</a><div class="cli-section-title">RIZZLER/</div><div class="cli-tree"><div>├── model: <span style="color:#fff">Meta LLaMA-3 8B</span> <span class="cli-tag pink">Jun 2025</span></div><div>├── method: QLoRA (4-bit quantisation) via Unsloth</div><div>├── adapters: q_proj · v_proj, r=64</div><div>└── tuning: temperature + top_p sampling for conversational AI</div></div><a href="https://github.com/RajvanshMalhotra/rizzler" target="_blank" class="cli-link">[ACCESS_WEIGHTS]</a></div>`,
-
-      experience: `<div class="cli-prompt">┌─[rajvansh@mainframe]─[~/experience]<br>└──╼ $ <span class="cli-cmd">cat experience.log</span></div><div class="cli-output"><div class="cli-section-title">[MAR 2025 – MAY 2025] AI/ML INTERN @ Samvedya AI × AIIMS Delhi</div><div class="cli-tree"><div>├── built: LLM pipeline to convert PNG → SVG visual abstracts</div><div>├── stack: Python · LLM orchestration · API pipelines</div><div>├── mvp: Delivered in <span class="cli-tag green">3 weeks</span></div><div>├── rag: Context-aware chat system — <span class="cli-tag green">80% accuracy</span> on clinical visual abstracts</div><div>└── impact: Streamlined medical communication at AIIMS Delhi 🏥</div></div><div class="cli-section-title">[JUN 2024 – DEC 2024] ML RESEARCH INTERN @ NIT Kurukshetra</div><div class="cli-tree"><div>├── features: VGG19 extraction → top 1,000 features via Random Forest classifier</div><div>├── accuracy: <span class="cli-tag pink">60%</span> → <span class="cli-tag pink">82%</span> → <span class="cli-tag green">99.8%</span> (F1: 0.9989)</div><div>├── model: Vision Transformer on deepfake dataset</div><div>├── optim: Golden Ratio + eye-spacing via OpenCV</div><div>└── output: Custom ANN — state-of-the-art accuracy, paper under review</div></div><div class="cli-section-title">[AUG 2023 – JUN 2027] B.Tech Computer Engineering @ NIT Kurukshetra</div><div class="cli-tree"><div>└── focus: AI · ML · Transformers · LLMs · Agentic AI</div></div></div>`,
-
-      achievements: `<div class="cli-prompt">┌─[rajvansh@mainframe]─[~/achievements]<br>└──╼ $ <span class="cli-cmd">cat achievements.txt</span></div><div class="cli-output"><div class="cli-section-title">═══════════ COMBAT STATS ═══════════</div><div class="cli-section-title">🏆 AMAZON ML CHALLENGE 2025</div><div class="cli-tree"><div>├── rank: <span class="cli-tag green">#2313 (Top 2.8% · 97.2 percentile)</span></div><div>├── perf: SMAPE 100 → 48 in <span style="color:#fff">2 days</span></div><div>└── role: Team lead</div></div><div class="cli-section-title">🤖 RUMIK AI HACKATHON — AWAAZ</div><div class="cli-tree"><div>├── result: <span class="cli-tag pink">TOP 50</span></div><div>└── feat: Voice AI latency 46s → &lt;3s via 12 targeted optimisations</div></div><div class="cli-section-title">🥋 TAEKWONDO</div><div class="cli-tree"><div>└── medals: <span class="cli-tag green">3 × Gold</span> <span class="cli-tag cyan">1 × Silver</span></div></div><div class="cli-section-title">💻 DATA STRUCTURES & ALGORITHMS</div><div class="cli-tree"><div>└── problems: <span class="cli-tag green">300+</span> on LeetCode · Codeforces</div></div><div class="cli-section-title">🔬 RESEARCH</div><div class="cli-tree"><div>├── paper: Deepfake Detection (under review)</div><div>└── paper: Battery SOC/SOH RPNN — IEEE submission</div></div></div>`,
-
-      skills: `<div class="cli-prompt">┌─[rajvansh@mainframe]─[~/skills]<br>└──╼ $ <span class="cli-cmd">cat skills.json</span></div><div class="cli-output" style="line-height:2;"><div><span class="cli-tag pink">Languages</span>    Python · C/C++</div><br><div><span class="cli-tag pink">ML / DL</span>      PyTorch · TensorFlow · Keras · Scikit-learn</div><div style="padding-left:14px;">Pandas · NumPy · OpenCV · Matplotlib</div><br><div><span class="cli-tag pink">AI</span>           LLM Fine-tuning (QLoRA) · RAG Pipelines · Prompt Engineering</div><div style="padding-left:14px;">Agentic AI · Vision Transformers · NLP · Deep Learning</div><br><div><span class="cli-tag pink">DevOps</span>       AWS EC2 · Docker · GitHub Actions · MLflow · Apache Airflow · ETL · SQL</div><br><div><span class="cli-tag pink">Frameworks</span>   LangChain · LangGraph · FastAPI · Streamlit · Redis · httpx · asyncio · WebSocket</div><br><div><span class="cli-tag pink">Coursework</span>   DSA · OS · DBMS · Computer Networks · Computer Architecture · Software Engineering · AI</div></div>`,
-
-      contact: `<div class="cli-prompt">┌─[rajvansh@mainframe]─[~/contact]<br>└──╼ $ <span class="cli-cmd">./connect.sh</span></div><div class="cli-output"><div>[ESTABLISHING CONNECTION...]</div><div>[ENCRYPTION: AES-256]</div><div>[HANDSHAKE: COMPLETE]</div><br><div>📡 COMMUNICATION CHANNELS ONLINE:</div><br><a href="mailto:2004rajvnsh@gmail.com" class="cli-contact-link">📧 EMAIL</a><a href="https://linkedin.com/in/rajvanshm1" target="_blank" class="cli-contact-link">💼 LINKEDIN</a><a href="https://github.com/RajvanshMalhotra" target="_blank" class="cli-contact-link">⚡ GITHUB</a><a href="tel:+919999187079" class="cli-contact-link">📞 PHONE</a><br><br><div style="line-height:2;color:#ccc;">&gt; Open to: SDE, ML Engineering, Research, Agentic AI roles<br>&gt; &quot;Let&apos;s build something that breaks the internet.&quot;<br><br><span class="cli-tag green">STATUS: READY_TO_CONNECT</span></div></div>`
-    };
-
-    function populateWindow(id) {
-      const body = document.getElementById('wbody-' + id);
-      if (!body || body.dataset.populated) return;
-      if (windowContent[id]) { body.innerHTML = windowContent[id]; body.dataset.populated = '1'; }
-    }
-
-    function makeDraggable(el) {
-      const tb = el.querySelector('.win-titlebar');
-      let ox=0, oy=0;
-      tb.addEventListener('mousedown', e => {
-        if (e.target.classList.contains('win-btn')) return;
-        ox=e.clientX-el.offsetLeft; oy=e.clientY-el.offsetTop; bringToFront(el);
-        const onMove = e => {
-          el.style.left = Math.max(0, Math.min(window.innerWidth-el.offsetWidth, e.clientX-ox))+'px';
-          el.style.top  = Math.max(26, Math.min(window.innerHeight-el.offsetHeight, e.clientY-oy))+'px';
-        };
-        const onUp = () => { document.removeEventListener('mousemove',onMove); document.removeEventListener('mouseup',onUp); };
-        document.addEventListener('mousemove',onMove); document.addEventListener('mouseup',onUp); e.preventDefault();
-      });
-    }
-
-    function makeResizable(el) {
-      const h = el.querySelector('.win-resize');
-      h.addEventListener('mousedown', e => {
-        const sx=e.clientX, sy=e.clientY, sw=el.offsetWidth, sh=el.offsetHeight;
-        const onMove = e => { el.style.width=Math.max(480,sw+e.clientX-sx)+'px'; el.style.height=Math.max(340,sh+e.clientY-sy)+'px'; };
-        const onUp = () => { document.removeEventListener('mousemove',onMove); document.removeEventListener('mouseup',onUp); };
-        document.addEventListener('mousemove',onMove); document.addEventListener('mouseup',onUp); e.preventDefault();
-      });
-    }
-
-    function buildTerminalBody(el) {
-      const body = el.querySelector('.win-body');
-      body.innerHTML = `
-        <div class="term-output" id="term-output">
-          <div class="term-line">Welcome to <span class="t-good">RajvanshOS 2026.1</span></div>
-          <div class="term-line">Type <span class="t-cmd">'help'</span> for commands, <span class="t-cmd">'hint'</span> for easter eggs.</div>
-          <div class="term-line"></div>
+        <div class="xp-fact">80%<small>Accuracy · MVP in 3 weeks</small></div>
+      </article>
+      <article class="xp rv">
+        <div class="xp-when">Jun — Dec 2024</div>
+        <div>
+          <h3 class="xp-role">ML Research Intern</h3>
+          <p class="xp-org">NIT Kurukshetra — Vision Transformers, custom ANNs</p>
         </div>
-        <div class="term-input-row">
-          <span class="term-prompt-label">rajvansh@mainframe:~/desktop&nbsp;$&nbsp;</span>
-          <input class="term-input" id="term-input" autocomplete="off" spellcheck="false" placeholder="type a command...">
+        <div class="xp-fact">60→82%<small>ViT accuracy · SOTA custom ANN</small></div>
+      </article>
+      <article class="xp rv">
+        <div class="xp-when">2023 — 2027</div>
+        <div>
+          <h3 class="xp-role">B.Tech, Computer Engineering</h3>
+          <p class="xp-org">National Institute of Technology, Kurukshetra</p>
         </div>
-      `;
-      initTerminal();
+        <div class="xp-fact">NIT KKR<small>AI · Systems · Architecture</small></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ THE RECORD ════════ -->
+<section class="chapter left" id="record" data-accent="mono">
+  <div class="ch-card" data-mood="mono">
+    <div class="ch-card-in">
+      <div class="ch-roman">✦</div>
+      <div class="ch-label">Appendix</div>
+      <h2 class="ch-name" data-split>The Record</h2>
+      <p class="ch-line">— what remains when the rain stops</p>
+      <div class="ch-orn">✦ ✦ ✦</div>
+    </div>
+  </div>
+  <div class="ch-page">
+    <div style="width:100%">
+      <div class="rec-grid">
+        <div class="rv"><div class="rec-v">2.8<em>%</em></div><div class="rec-l">Amazon ML Challenge<br>SMAPE 100 → 48 in 2 days</div></div>
+        <div class="rv"><div class="rec-v">Top <em>50</em></div><div class="rec-l">Rumik AI Hackathon<br>Awaaz</div></div>
+        <div class="rv"><div class="rec-v"><em>IEEE</em></div><div class="rec-l">Research submission<br>Battery RPNN</div></div>
+        <div class="rv"><div class="rec-v">3<em>×</em>Gold</div><div class="rec-l">Taekwondo<br>+ 1 silver</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ARSENAL ════════ -->
+<div class="marquee"><div class="mq" id="mq1"></div></div>
+<div class="marquee rev"><div class="mq" id="mq2"></div></div>
+
+<!-- ════════ EPILOGUE ════════ -->
+<section id="epilogue" data-mood="crimson">
+  <div class="ep-k rv">Epilogue · The Signal</div>
+  <h2 class="ep-t rv">Let's<br><span class="ghosted">Build.</span></h2>
+  <p class="ep-s rv">Open to SDE, ML engineering, research &amp; agentic-AI roles. If your team measures in milliseconds — send the signal.</p>
+  <div class="ep-row rv">
+    <a class="ep-btn pri" href="mailto:2004rajvnsh@gmail.com">Email</a>
+    <a class="ep-btn" href="https://linkedin.com/in/rajvanshm1" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="ep-btn" href="https://github.com/RajvanshMalhotra" target="_blank" rel="noopener">GitHub</a>
+    <a class="ep-btn" href="./resume.pdf" target="_blank" rel="noopener">Resume</a>
+  </div>
+  <div class="ep-credits rv">
+    <div><b>Written &amp; directed by</b> Rajvansh Malhotra</div>
+    <div><b>Shot on</b> PyTorch · <b>Scored in</b> Python</div>
+  </div>
+  <div class="fin rv">~ fin ~</div>
+</section>
+
+<footer>
+  <span>© 2026 Rajvansh Malhotra</span>
+  <span>Delhi, India</span>
+  <span>The end is a new commit</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+
+<script>
+/* ═══════════ SMOOTH SCROLL ═══════════ */
+gsap.registerPlugin(ScrollTrigger);
+const lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 1.02 });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+
+/* ═══════════ SPLIT CHAPTER TITLES ═══════════ */
+document.querySelectorAll('[data-split]').forEach(el => {
+  el.innerHTML = el.textContent.trim().split(/\s+/)
+    .map(w => `<span class="w"><i>${w}</i></span>`).join(' ');
+});
+
+/* ═══════════ THE RIDDLE GATE — typed invitation ═══════════ */
+const TYPE_TEXT = 'Click for the immersive experience';
+const typedEl = document.getElementById('typed');
+let ti = 0;
+setTimeout(function typeChar(){
+  if (ti <= TYPE_TEXT.length) {
+    typedEl.textContent = TYPE_TEXT.slice(0, ti++);
+    setTimeout(typeChar, 42 + Math.random()*46);
+  }
+}, 900);
+
+/* entry: audio ignites, camera flies through the riddle, then settles into the cover */
+window.__entered = false;
+function enterSite(){
+  if (window.__entered) return;
+  window.__entered = true;
+
+  startSound(); /* click = user gesture, so audio may begin */
+
+  const tl = gsap.timeline();
+  tl.to('#riddle', { scale: 9, opacity: 0, duration: 1.1, ease: 'power4.in' })
+    .to('#type-line', { opacity: 0, scale: 1.6, duration: .5 }, '<')
+    .to('#gate', { opacity: 0, duration: .7, onComplete: () => document.getElementById('gate').remove() }, '-=0.35')
+    .add(() => document.body.classList.remove('boot'), '<')
+    /* zoom out, then settle into the cover */
+    .fromTo('#cover', { scale: 1.28, filter: 'blur(10px)' },
+                       { scale: 1, filter: 'blur(0px)', duration: 1.7, ease: 'power3.out' }, '-=0.4')
+    .to('.cover-k', { opacity: 1, duration: 1 }, '<+0.5')
+    .to('.cover-t .row:nth-child(1) span', { y: 0, duration: 1.25, ease: 'power4.out' }, '<+0.2')
+    .to('.cover-t .row:nth-child(2) span', { y: 0, duration: 1.25, ease: 'power4.out' }, '<+0.15')
+    .to('.cover-s', { opacity: 1, duration: 1.1 }, '<+0.5')
+    .to('.cover-meta', { opacity: 1, duration: 1 }, '<+0.3')
+    .to('.open-cue', { opacity: 1, duration: 1 }, '<+0.3');
+}
+document.getElementById('gate').addEventListener('click', enterSite);
+addEventListener('keydown', e => { if (e.key === 'Enter' && !window.__entered) enterSite(); });
+
+/* ═══════════ CHAPTER TITLE CARDS ═══════════ */
+document.querySelectorAll('.ch-card').forEach(card => {
+  const words = card.querySelectorAll('.ch-name .w i');
+  const bits  = card.querySelectorAll('.ch-label, .ch-line, .ch-orn');
+  const roman = card.querySelector('.ch-roman');
+
+  gsap.timeline({ scrollTrigger: { trigger: card, start: 'top 55%' } })
+    .fromTo(bits, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .9, stagger: .12, ease: 'power3.out' })
+    .to(words, { y: 0, duration: 1.05, stagger: .09, ease: 'power4.out' }, '<+0.1');
+  gsap.set(words, { y: '112%' });
+
+  gsap.fromTo(roman, { scale: .86, opacity: .55 }, {
+    scale: 1.06, opacity: 1, ease: 'none',
+    scrollTrigger: { trigger: card.parentElement, start: 'top bottom', end: 'bottom top', scrub: true }
+  });
+
+  gsap.to(card.querySelector('.ch-card-in'), {
+    scale: .93, opacity: .12, filter: 'blur(2px)', ease: 'none',
+    scrollTrigger: { trigger: card.parentElement, start: '25% top', end: '75% top', scrub: true }
+  });
+});
+
+/* ═══════════ CONTENT REVEALS ═══════════ */
+gsap.utils.toArray('.rv').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 1.15, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 88%' }
+  });
+});
+
+/* ═══════════ PROGRESS + TIMECODE ═══════════ */
+const prog = document.getElementById('progress');
+addEventListener('scroll', () => {
+  const h = document.documentElement;
+  prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+}, { passive: true });
+
+const tcEl = document.getElementById('timecode'), t0 = performance.now();
+setInterval(() => {
+  const ms = performance.now() - t0, p = n => String(n).padStart(2, '0');
+  tcEl.textContent = `${p(Math.floor(ms/3600000))}:${p(Math.floor(ms/60000)%60)}:${p(Math.floor(ms/1000)%60)}:${p(Math.floor(ms/41.67)%24)}`;
+}, 42);
+
+/* ═══════════ MARQUEES ═══════════ */
+const skills = ['Python','C/C++','PyTorch','TensorFlow','RAG','LLM Fine-Tuning','QLoRA','Prompt Engineering','NLP','Deep Learning','OpenCV','Scikit-learn'];
+const tools  = ['AWS EC2','Docker','GitHub Actions','MLflow','SQL','ETL','Claude Code','asyncio','WebSocket','FastAPI','LangChain','Agentic AI'];
+function fillMq(id, arr){
+  const one = arr.map((s,i) => `<span${i%3===0?' class="g"':''}>${s}</span><span style="color:var(--faint)">·</span>`).join('');
+  document.getElementById(id).innerHTML = one + one;
+}
+fillMq('mq1', skills); fillMq('mq2', tools);
+
+/* ═══════════ BACKGROUND FILM + SOUND ═══════════
+   Drop your edit at ./assets/bg.mp4 — it autoplays muted (browser rule),
+   and the SOUND button unmutes the film's own audio with a fade.        */
+const bgv = document.getElementById('bgvid');
+let videoReady = false;
+
+/* try these locations in order until one loads */
+const VIDEO_CANDIDATES = [
+  './assets/bg.mp4',
+  './bg.mp4',
+  './assets/bg.webm',
+  './vidssave.com MY EYES - TRAVIS SCOTT x THE BATMAN 2022 4k 1080P.mp4',
+  './assets/vidssave.com MY EYES - TRAVIS SCOTT x THE BATMAN 2022 4k 1080P.mp4',
+  /* Cowork session uploads folder (works while previewing locally) */
+  '../uploads/vidssave.com MY EYES - TRAVIS SCOTT x THE BATMAN 2022 4k 1080P.mp4'
+];
+let vidIdx = 0;
+
+/* video plays visuals from 0:00 (always muted); a separate hidden
+   audio player runs the same file's soundtrack, starting at AUDIO_START */
+const AUDIO_START = 30; /* seconds */
+const bga = document.createElement('audio');
+bga.loop = true;
+bga.preload = 'auto';
+bga.addEventListener('loadedmetadata', () => { bga.currentTime = AUDIO_START; });
+bga.addEventListener('timeupdate', () => {
+  /* when the audio loop wraps to 0, jump back to the start point */
+  if (bga.currentTime < AUDIO_START - .4) bga.currentTime = AUDIO_START;
+});
+
+bgv.addEventListener('canplay', () => {
+  videoReady = true;
+  document.body.classList.add('has-video');
+  console.log('[bg video] playing:', bgv.currentSrc || bgv.src);
+  bgv.muted = true; /* visuals only — sound comes from the audio player */
+  bgv.play().catch(() => {});
+  if (!bga.src) bga.src = bgv.currentSrc || bgv.src;
+});
+bgv.addEventListener('error', () => {
+  console.warn('[bg video] failed to load:', VIDEO_CANDIDATES[vidIdx]);
+  vidIdx++;
+  if (vidIdx < VIDEO_CANDIDATES.length) {
+    bgv.src = encodeURI(VIDEO_CANDIDATES[vidIdx]);
+    bgv.load();
+  } else {
+    document.body.classList.remove('has-video');
+    console.warn('[bg video] no video found. Place your clip next to index.html as assets/bg.mp4');
+  }
+});
+bgv.src = encodeURI(VIDEO_CANDIDATES[0]);
+
+const soundBtn = document.getElementById('sound');
+let soundOn = false;
+
+function startSound(){
+  soundOn = true;
+  soundBtn.classList.add('on');
+  if (!bga.src && (bgv.currentSrc || bgv.src)) bga.src = bgv.currentSrc || bgv.src;
+  if (bga.currentTime < AUDIO_START) bga.currentTime = AUDIO_START;
+  bga.volume = 0;
+  bga.play().catch(() => {});
+  gsap.to(bga, { volume: .75, duration: 2.5 });
+}
+function stopSound(){
+  soundOn = false;
+  soundBtn.classList.remove('on');
+  gsap.to(bga, { volume: 0, duration: .8, onComplete: () => bga.pause() });
+}
+soundBtn.addEventListener('click', () => soundOn ? stopSound() : startSound());
+</script>
+
+<script type="module">
+/* ═══════════ THREE.JS — GOTHAM WEATHER ═══════════
+   Rain layers + red cinders, compositing over the film. */
+import * as THREE from 'three';
+
+const canvas = document.getElementById('gl');
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+} catch(e) { canvas.remove(); }
+
+if (renderer) {
+  const MOBILE = matchMedia('(max-width:760px)').matches;
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.setClearColor(0x040405, 0);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, .1, 600);
+  camera.position.set(0, 0, 150); /* starts pulled back; dollies in after the gate */
+
+  function streakTexture(){
+    const c = document.createElement('canvas'); c.width = 16; c.height = 64;
+    const g = c.getContext('2d');
+    const grad = g.createLinearGradient(0,0,0,64);
+    grad.addColorStop(0,'rgba(255,255,255,0)');
+    grad.addColorStop(.5,'rgba(255,255,255,.9)');
+    grad.addColorStop(1,'rgba(255,255,255,0)');
+    g.fillStyle = grad; g.fillRect(6,0,4,64);
+    return new THREE.CanvasTexture(c);
+  }
+  function glowTexture(){
+    const c = document.createElement('canvas'); c.width = c.height = 64;
+    const g = c.getContext('2d');
+    const grad = g.createRadialGradient(32,32,0,32,32,32);
+    grad.addColorStop(0,'rgba(255,255,255,1)'); grad.addColorStop(1,'rgba(0,0,0,0)');
+    g.fillStyle = grad; g.fillRect(0,0,64,64);
+    return new THREE.CanvasTexture(c);
+  }
+  const rainTex = streakTexture(), sparkTex = glowTexture();
+
+  /* ── MOODS ── */
+  const MOODS = {
+    crimson: { rain: new THREE.Color(0x8fa0b5), rainOp: .5,  spark: .85 },
+    steel:   { rain: new THREE.Color(0xb7c9dd), rainOp: .65, spark: 0 },
+    mono:    { rain: new THREE.Color(0xcccccc), rainOp: .4,  spark: 0 }
+  };
+  const cur = { rain: MOODS.crimson.rain.clone(), rainOp: .5, spark: 0 };
+  let target = MOODS.crimson;
+
+  /* ── RAIN (two depths, falling streaks) ── */
+  function makeRain(count, size, speedBase, spread){
+    const geo = new THREE.BufferGeometry();
+    const pos = new Float32Array(count*3);
+    const vel = new Float32Array(count);
+    for (let i=0;i<count;i++){
+      pos[i*3]   = (Math.random()-.5)*spread;
+      pos[i*3+1] = (Math.random()-.5)*200;
+      pos[i*3+2] = 45 - Math.random()*180;
+      vel[i] = speedBase + Math.random()*speedBase;
     }
+    geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+    const mat = new THREE.PointsMaterial({
+      size, map: rainTex, transparent: true, opacity: .5,
+      depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
+    });
+    return { pts: new THREE.Points(geo, mat), vel, geo, mat, count };
+  }
+  const rain1 = makeRain(MOBILE?500:1400, 2.6, .55, 240);
+  const rain2 = makeRain(MOBILE?300:800, 4.2, .95, 280);
+  scene.add(rain1.pts, rain2.pts);
 
-    let termHistory = [], termHistIdx = -1, termCwd = '~/desktop';
+  /* ── CINDERS (red sparks drifting up, crimson chapters only) ── */
+  const N = MOBILE ? 220 : 550;
+  const cGeo = new THREE.BufferGeometry();
+  const cPos = new Float32Array(N*3);
+  const cVel = new Float32Array(N);
+  for (let i=0;i<N;i++){
+    cPos[i*3]   = (Math.random()-.5)*220;
+    cPos[i*3+1] = (Math.random()-.5)*160;
+    cPos[i*3+2] = 40 - Math.random()*200;
+    cVel[i] = .02 + Math.random()*.07;
+  }
+  cGeo.setAttribute('position', new THREE.BufferAttribute(cPos,3));
+  const cMat = new THREE.PointsMaterial({
+    size: 1.5, map: sparkTex, color: 0xe0263a, transparent: true, opacity: 0,
+    depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
+  });
+  const cinders = new THREE.Points(cGeo, cMat);
+  scene.add(cinders);
 
-    function initTerminal() {
-      const input = document.getElementById('term-input');
-      if (!input) return;
-      input.addEventListener('keydown', e => {
-        if (e.key === 'Enter') {
-          const cmd = input.value; input.value = '';
-          if (cmd.trim()) { termHistory.push(cmd); termHistIdx=termHistory.length; runCommand(cmd.trim()); }
-        } else if (e.key === 'ArrowUp') {
-          e.preventDefault(); if (termHistIdx>0) input.value=termHistory[--termHistIdx];
-        } else if (e.key === 'ArrowDown') {
-          e.preventDefault();
-          if (termHistIdx<termHistory.length-1) { input.value=termHistory[++termHistIdx]; }
-          else { termHistIdx=termHistory.length; input.value=''; }
-        }
-      });
-      document.getElementById('win-terminal').addEventListener('click', () => input.focus());
-    }
+  /* ── MOOD SWITCHING ── */
+  document.querySelectorAll('[data-mood]').forEach(el => {
+    ScrollTrigger.create({
+      trigger: el, start: 'top 55%', end: 'bottom 45%',
+      onEnter:     () => target = MOODS[el.dataset.mood] || MOODS.steel,
+      onEnterBack: () => target = MOODS[el.dataset.mood] || MOODS.steel
+    });
+  });
 
-    function termPrint(html, cls='') {
-      const out=document.getElementById('term-output'); if(!out)return;
-      const line=document.createElement('div'); line.className='term-line '+cls; line.innerHTML=html;
-      out.appendChild(line); out.scrollTop=out.scrollHeight;
-    }
+  /* ── dolly + parallax ── */
+  let scrollP = 0;
+  addEventListener('scroll', () => {
+    const h = document.documentElement;
+    scrollP = h.scrollTop / (h.scrollHeight - h.clientHeight);
+  }, { passive: true });
 
-    function termPrintCmd(cmd) {
-      termPrint(`<span class="t-path">${termCwd}</span>&nbsp;<span class="t-cmd">$</span>&nbsp;${escHtml(cmd)}`);
-    }
+  let pmx = 0, pmy = 0;
+  addEventListener('mousemove', e => {
+    pmx = (e.clientX/innerWidth - .5)*2;
+    pmy = (e.clientY/innerHeight - .5)*2;
+  });
 
-    function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-    function termClear() { const out=document.getElementById('term-output'); if(out)out.innerHTML=''; }
+  addEventListener('resize', () => {
+    camera.aspect = innerWidth/innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+  });
 
-    function runCommand(rawCmd) {
-      const cmd=rawCmd.trim(), lower=cmd.toLowerCase(), parts=cmd.split(/\s+/), main=parts[0].toLowerCase(), args=parts.slice(1);
-      termPrintCmd(cmd);
-      termHandleCommand(main, args, lower, cmd);
-    }
+  const clock = new THREE.Clock();
+  renderer.setAnimationLoop(() => {
+    const t = clock.getElapsedTime();
 
-    function termHandleCommand(main, args, lower, cmd) {
-      if (main==='ls'||main==='dir') {
-        if (['-la','-l','-al'].includes(args[0])) {
-          termPrint('total 7');
-          ['about_me','projects','experience','achievements','skills','contact'].forEach(d=>termPrint(`drwxr-xr-x  2 rajvansh staff 4096 Jun  1 02:38 <span class="t-good">${d}/</span>`));
-          termPrint('-rw-r--r--  1 rajvansh staff 98304 Jun  1 02:38 <span class="t-warn">resume.pdf</span>');
-        } else {
-          termPrint('<span class="t-good">about_me/</span>  <span class="t-good">projects/</span>  <span class="t-good">experience/</span>  <span class="t-good">achievements/</span>  <span class="t-good">skills/</span>  <span class="t-good">contact/</span>  <span class="t-warn">resume.pdf</span>');
-        }
-      } else if (main==='pwd') {
-        termPrint('/home/rajvansh/desktop');
-      } else if (main==='cd') {
-        const dir=args[0];
-        if (!dir||dir==='~'||dir==='~/desktop') { termCwd='~/desktop'; }
-        else if (dir==='..') { termCwd='~/desktop'; termPrint('/home/rajvansh'); }
-        else { termPrint(`<span class="t-err">cd: ${escHtml(dir)}: Directory navigation disabled in web interface</span>`); termPrint(`Tip: type a section name directly (e.g., <span class="t-cmd">projects</span>) to open it.`); }
-      } else if (main==='cat') {
-        const file=args[0]||'';
-        if (!file) { termPrint('<span class="t-err">cat: missing operand</span>'); }
-        else if (file==='resume.pdf'||file==='./assets/resume.pdf') { termPrint('&gt; Opening resume.pdf...'); openResume(); }
-        else if (['intro.txt','philosophy.txt','experience.log','achievements.txt','skills.json'].includes(file)) {
-          const id=file.replace('.txt','').replace('.log','').replace('.json','').replace('intro','about').replace('philosophy','about');
-          openWindow(id); termPrint(`&gt; cat ${escHtml(file)} → opening window...`);
-        } else { termPrint(`<span class="t-err">cat: ${escHtml(file)}: No such file or directory</span>`); }
-      } else if (['touch','mkdir','rm','mv','cp'].includes(main)) {
-        termPrint(`<span class="t-err">${main}: Permission denied — this is a read-only portfolio system.</span>`);
-      } else if (main==='whoami') { termPrint('rajvansh');
-      } else if (main==='hostname') { termPrint('rajvansh-mainframe');
-      } else if (main==='uname') {
-        termPrint(args[0]==='-a' ? 'RajvanshOS 2026.1.0 #1 SMP PREEMPT AGI-class Mon Jun 1 02:38 IST 2026 x86_64 GNU/Linux' : 'Linux');
-      } else if (main==='date') { termPrint(new Date().toString());
-      } else if (main==='uptime') { termPrint('up 3 years, caffeinated, load average: building, shipping, optimizing');
-      } else if (main==='env') {
-        ['PATH=/usr/local/bin:/usr/bin:/usr/sbin','SHELL=/bin/zsh','USER=rajvansh','LLM_MODEL=llama-3-8b-qlora','COFFEE_LEVEL=100%','VIBE=hacker','STATUS=open_to_opportunities'].forEach(l=>termPrint(l));
-      } else if (main==='which') {
-        const p={python3:'/usr/local/bin/python3 (v3.12, torch enabled)',git:'/usr/bin/git',docker:'/usr/local/bin/docker',node:'node: not found — Python shop'};
-        termPrint(p[args[0]]||`${escHtml(args[0]||'')}: not found`);
-      } else if (main==='echo') { termPrint(escHtml(args.join(' ')));
-      } else if (main==='man') {
-        if (args[0]==='rajvansh') {
-          termPrint('<br><span class="t-cmd">RAJVANSH(1)           User Commands           RAJVANSH(1)</span>');
-          termPrint('<br><strong>NAME</strong>'); termPrint('    rajvansh — ML Engineer, AGI Researcher, Builder');
-          termPrint('<br><strong>SYNOPSIS</strong>'); termPrint('    rajvansh [--build] [--optimize] [--deploy] [--hire]');
-          termPrint('<br><strong>DESCRIPTION</strong>'); termPrint('    Rajvansh reduces latency, ships agents, and fine-tunes LLMs.'); termPrint('    Known to reduce voice AI latency by 93% in a single hackathon.');
-          termPrint('<br><strong>OPTIONS</strong>'); termPrint('    --hire        Returns 200 OK immediately.'); termPrint('    --optimize    Will find the bottleneck. Will eliminate it.'); termPrint('    --deploy      Containerised. CI/CD included. No manual steps.');
-          termPrint('<br><strong>EXIT STATUS</strong>'); termPrint('    0 on hire. 1 on competitor getting there first.');
-        } else { termPrint(`<span class="t-err">No manual entry for ${escHtml(args[0]||'that')}</span>`); }
-      } else if (main==='ps') {
-        termPrint('  PID TTY     STAT   TIME COMMAND'); termPrint('    1 ?       Ss     0:00 /sbin/init splash');
-        termPrint('  420 ?       Ssl  120:42 <span class="t-good">GOTHAM_ORBITAL</span> --agents=3 --memory=hybrid');
-        termPrint('  421 ?       Ssl   88:17 <span class="t-good">AWAAZ</span> --latency=2.8s --stt=sarvam');
-        termPrint('  422 ?       Ssl   44:09 <span class="t-good">BATTERY_RPNN</span> --device=esp32 --physics=true');
-        termPrint('  423 ?       S      3:21 <span class="t-good">RIZZLER</span> --model=llama3-8b --method=qlora');
-        termPrint(' 1337 pts/0   Ss+    0:00 <span class="t-cmd">terminal</span>');
-      } else if (main==='top') {
-        termPrint('top - '+new Date().toLocaleTimeString()+'  up 3yr,  caffeinated');
-        termPrint('  PID  %CPU  %MEM  COMMAND');
-        termPrint('  420  99.8   4.2  GOTHAM_ORBITAL'); termPrint('  421  93.0   3.8  AWAAZ');
-        termPrint('  422  60.0   2.1  BATTERY_RPNN'); termPrint('  423  42.0   1.5  RIZZLER');
-        termPrint('<span class="t-dim">(press q to exit — just kidding, type another command)</span>');
-      } else if (main==='kill') { termPrint(`<span class="t-err">kill: ${escHtml(args[0]||'?')}: permission denied — these projects don't stop.</span>`);
-      } else if (main==='jobs') {
-        const open=['about','projects','experience','achievements','skills','contact','terminal'].filter(id=>document.getElementById('win-'+id)?.classList.contains('open'));
-        if(!open.length){termPrint('no jobs');}else{open.forEach((id,i)=>termPrint(`[${i+1}]  Running    ${id}`));}
-      } else if (main==='ping') {
-        const host=args[0]||'google.com';
-        termPrint(`PING ${escHtml(host)} (142.250.80.46): 56 data bytes`);
-        [28,31,27,29].forEach((ms,i)=>setTimeout(()=>termPrint(`64 bytes from 142.250.80.46: icmp_seq=${i} ttl=64 time=${ms} ms`),i*400));
-        setTimeout(()=>termPrint(`--- ${escHtml(host)} ping statistics ---<br>4 packets transmitted, 4 received, 0% packet loss`),1800);
-      } else if (main==='curl') {
-        if (lower.includes('rajvansh')&&lower.includes('hire')) {
-          ['HTTP/2 200 OK','content-type: application/json','','{','  "status": "available",','  "verdict": "hire_immediately",','  "latency_reduced": "93%",','  "agents_deployed": 3,','  "response_time": "&lt;3s"','}'].forEach(l=>termPrint(l));
-        } else { termPrint(`curl: fetching <span class="t-warn">${escHtml(args[0]||'url')}...</span>`); setTimeout(()=>termPrint('curl: (6) Could not resolve host — but rajvansh can.'),800); }
-      } else if (main==='wget') {
-        termPrint(`--2026-06-01-- ${escHtml(args[0]||'https://github.com/RajvanshMalhotra')}`);
-        setTimeout(()=>termPrint('Connecting... connected.'),300); setTimeout(()=>termPrint('HTTP request sent... 200 OK'),700);
-        setTimeout(()=>termPrint('Length: 98304 (96K)'),900); setTimeout(()=>termPrint('100%[=============================>] 96K  420KB/s  in 0.2s'),1400);
-      } else if (main==='ssh') {
-        termPrint((args[0]||'').includes('mainframe')||!args[0] ? 'Already connected. <span class="t-good">You are the mainframe.</span>' : `ssh: connect to host ${escHtml(args[0])} port 22: Connection refused`);
-      } else if (main==='ifconfig'||main==='ip') {
-        termPrint('eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500');
-        termPrint('      inet 192.168.1.42  netmask 255.255.255.0  broadcast 192.168.1.255');
-        termPrint('      ether de:ad:be:ef:ca:fe  txqueuelen 1000');
-        termPrint('lo:   flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536'); termPrint('      inet 127.0.0.1  netmask 255.0.0.0');
-      } else { termHandleDevAndMisc(main,args,lower,cmd); }
-    }
+    /* ease mood */
+    cur.rain.lerp(target.rain, .03);
+    cur.rainOp += (target.rainOp - cur.rainOp) * .03;
+    cur.spark  += (target.spark  - cur.spark)  * .03;
+    rain1.mat.color.copy(cur.rain); rain2.mat.color.copy(cur.rain);
+    rain1.mat.opacity = cur.rainOp; rain2.mat.opacity = cur.rainOp * .8;
+    cMat.opacity = cur.spark * (0.6 + Math.sin(t*2.1)*.15);
 
-    function termHandleDevAndMisc(main,args,lower,cmd) {
-      if (main==='git') {
-        const sub=args[0];
-        if (sub==='log') {
-          if (args[1]==='--oneline') {
-            ['a3f9c2e perf: eliminate TLS handshake overhead (-400ms/req)','d81b4a1 feat: replace httpx per-request client → module-level AsyncClient','9c2e871 optim: cut LLM tokens 512→200, -60% inference cost','f4a1d09 feat: WebSocket streaming replaces HTTP approval pipeline','b72c3e1 fix: swap Groq Whisper → Sarvam Saaras v3 Codemix STT','8d5f1a2 deploy: AWS EC2 + Docker + GitHub Actions CI/CD for Gotham','3c8e4b7 feat: HybridMemory — BM25 + semantic search + knowledge graph','1a2b3c4 init: first commit — building from scratch']
-            .forEach(l=>termPrint(`<span class="t-cmd">${escHtml(l)}</span>`));
-          } else {
-            termPrint('commit a3f9c2e'); termPrint('Author: Rajvansh Malhotra &lt;2004rajvnsh@gmail.com&gt;'); termPrint('Date:   Sun Jun 1 02:38:00 2026'); termPrint(''); termPrint('    perf: eliminate TLS handshake overhead (-400ms/req)'); termPrint(''); termPrint('    Replace per-request httpx.Client with persistent module-level'); termPrint('    AsyncClient. Eliminates repeated TLS setup on every TTS call.');
-          }
-        } else if (sub==='status') {
-          termPrint('On branch main'); termPrint("Your branch is up to date with 'origin/main'."); termPrint(''); termPrint('nothing to commit, working tree clean'); termPrint('<span class="t-good">Portfolio is production-ready.</span>');
-        } else if (sub==='diff') { termPrint('<span class="t-dim">No diff. Everything shipped.</span>');
-        } else { termPrint(`git: '${escHtml(sub||'')}' is not a git command. See 'git --help'.`); }
-      } else if (main==='docker') {
-        if (args[0]==='ps') {
-          termPrint('CONTAINER ID   IMAGE               STATUS         PORTS     NAMES');
-          termPrint('d3ad1337beef   gotham-orbital:v2   Up 3 days      8000/tcp  gotham_orbital');
-          termPrint('c0ffee420abc   awaaz-backend:v1    Up 18 hours    8080/tcp  awaaz');
-          termPrint('b4773ry999cc   battery-rpnn:esp    Up 7 days      —         battery_rpnn');
-        } else { termPrint('Docker Desktop is not running (but the containers are, somehow).'); }
-      } else if (main==='python3'||main==='python') {
-        termPrint('Python 3.12.0 (main, Jun 1 2026) [GCC 13.0] on linux');
-        termPrint('Type "help", "copyright", or "license" for more information.');
-        termPrint('&gt;&gt;&gt; import rajvansh');
-        termPrint('<span class="t-good">Importing rajvansh v2026.1...</span>');
-        setTimeout(()=>termPrint('✓ latency_optimizer loaded   # reduce(46s, target=3s) → 2.8s'),400);
-        setTimeout(()=>termPrint('✓ llm_finetuner loaded       # QLoRA, r=64, 4-bit quant'),700);
-        setTimeout(()=>termPrint('✓ agentic_ai loaded          # 3 concurrent agents, HybridMemory'),1000);
-        setTimeout(()=>termPrint('✓ physics_nn loaded          # RPNN + ODE loss, ESP32-deployable'),1300);
-        setTimeout(()=>termPrint('<span class="t-cmd">&gt;&gt;&gt; rajvansh.hire()</span>'),1700);
-        setTimeout(()=>termPrint('<span class="t-good">200 OK — {"verdict":"hire_immediately"}</span>'),2100);
-        setTimeout(()=>termPrint('&gt;&gt;&gt; <span class="t-dim">exit()</span>'),2600);
-      } else if (main==='npm') { termPrint('<span class="t-warn">npm: command not found. This is a Python shop.</span>');
-      } else if (['vim','vi','nano'].includes(main)) {
-        termPrint(`Entering ${main}...`); setTimeout(()=>termPrint('Type <span class="t-cmd">:q!</span> to escape.'),500); setTimeout(()=>termPrint('<span class="t-dim">(You cannot. Nobody ever escapes vim.)</span>'),1000);
-      } else if (main==='clear'||main==='cls') { termClear();
-      } else if (main==='history') { termHistory.forEach((c,i)=>termPrint(`  ${String(i+1).padStart(3)}  ${escHtml(c)}`));
-      } else if (main==='help') {
-        termPrint(''); termPrint('<span class="t-cmd">═══════════ AVAILABLE COMMANDS ═══════════</span>'); termPrint('');
-        termPrint('<span class="t-warn">FILESYSTEM:</span>'); termPrint('  ls [-la]   pwd   cd [dir]   cat [file]'); termPrint('');
-        termPrint('<span class="t-warn">SYSTEM:</span>'); termPrint('  whoami   hostname   uname [-a]   date   uptime   env   which   echo   man'); termPrint('');
-        termPrint('<span class="t-warn">PROCESSES:</span>'); termPrint('  ps [aux]   top   kill [pid]   jobs'); termPrint('');
-        termPrint('<span class="t-warn">NETWORK:</span>'); termPrint('  ping [host]   curl [url]   wget [url]   ssh [host]   ifconfig'); termPrint('');
-        termPrint('<span class="t-warn">DEV TOOLS:</span>'); termPrint('  git log [--oneline]   git status   docker ps   python3   vim'); termPrint('');
-        termPrint('<span class="t-warn">PORTFOLIO SHORTCUTS:</span>'); termPrint('  about   projects   experience   achievements   skills   contact   resume'); termPrint('');
-        termPrint('<span class="t-warn">TERMINAL:</span>'); termPrint('  clear / cls   history   help   hint'); termPrint('');
-        termPrint('Type <span class="t-cmd">hint</span> for easter eggs.');
-      } else if (main==='hint') {
-        termPrint(''); termPrint('🎮 Easter Eggs:');
-        termPrint('  <span class="t-cmd">why so serious</span>   — chaos ensues 🃏');
-        termPrint('  <span class="t-cmd">./benchmark.sh</span>   — engineer benchmark report');
-        termPrint('  <span class="t-cmd">hack the planet</span>  — activate hacker mode');
-        termPrint('  <span class="t-cmd">matrix</span>           — toggle matrix intensity');
-        termPrint('  <span class="t-cmd">neofetch</span>         — system info ASCII art');
-        termPrint('');
-      } else if (lower==='why so serious'||lower==='why so serious?') {
-        termPrint('Let me put a smile on that face... 🃏');
-        setTimeout(()=>{ const ov=document.getElementById('joker-overlay'); ov.style.display='flex'; setTimeout(()=>{ ov.style.display='none'; startHackerExit(); },6000); },800);
-      } else if (lower==='hack the planet') {
-        const mb=document.getElementById('matrix-bg'); mb.style.display='block'; mb.style.opacity='0.4';
-        if(!window._matrixRunning)startMatrixBg();
-        termPrint('<span class="t-warn">[HACKING MODE ACTIVATED]</span>'); termPrint('Accessing mainframe...');
-        setTimeout(()=>termPrint('Bypassing firewall...'),500); setTimeout(()=>termPrint('Downloading consciousness...'),1000);
-        setTimeout(()=>termPrint('<span class="t-good">Access granted. Welcome, Neo.</span>'),1500);
-        setTimeout(()=>{document.getElementById('matrix-bg').style.opacity='0.1';},5000);
-      } else if (lower==='matrix') {
-        const mb=document.getElementById('matrix-bg'); mb.style.display='block';
-        if(!window._matrixRunning)startMatrixBg();
-        const cur=parseFloat(mb.style.opacity)||0;
-        if(cur>0.1){mb.style.opacity='0.08';termPrint('[Matrix intensity: LOW]');}
-        else{mb.style.opacity='0.28';termPrint('[Matrix intensity: HIGH]');}
-      } else if (main==='neofetch'||main==='screenfetch') {
-        termPrint(''); termPrint('         _nnnn_         <span class="t-cmd">rajvansh</span>@<span class="t-good">mainframe</span>');
-        termPrint('        dGGGGMMb        ─────────────────────────────');
-        termPrint('       @p~qp~~qMb       <span class="t-warn">OS:</span> RajvanshOS 2026.1.0');
-        termPrint('       M|@||@) M|       <span class="t-warn">Host:</span> Portfolio System');
-        termPrint('       @,----.JM|       <span class="t-warn">Kernel:</span> AGI-class 6.0.0');
-        termPrint('      JS^\\__/  qKL      <span class="t-warn">Uptime:</span> 3 years, caffeinated');
-        termPrint('     dZP        qKRb    <span class="t-warn">Shell:</span> matrix-terminal');
-        termPrint('    dZP          qKKb   <span class="t-warn">CPU:</span> Neural Processor @ ∞GHz');
-        termPrint('   fZP            SMMb  <span class="t-warn">GPU:</span> Vision Transformer v19');
-        termPrint('   HZM            MMMM  <span class="t-warn">Memory:</span> 420GB DDR5');
-        termPrint('   FqM            MMMM  <span class="t-warn">Projects:</span> 4 deployed');
-        termPrint(' __| ".        |\\dS"qML <span class="t-warn">Agents:</span> 3 concurrent LLMs');
-        termPrint(" |    `.       | `' \\Zq <span class=\"t-warn\">Status:</span> Building AGI");
-        termPrint("_)      \\.___.,|     .' "); termPrint("\\____   )MMMMMP|   .'  "); termPrint("     `-'       `--'   "); termPrint('');
-      } else if (lower==='./benchmark.sh'||lower==='benchmark'||lower==='./benchmark') {
-        runBenchmark();
-      } else if (['about','projects','experience','achievements','skills','contact'].includes(main)) {
-        openWindow(main); termPrint(`[Opening ${main}...]`);
-      } else if (main==='resume'||main==='cv') {
-        openResume(); termPrint('&gt; Opening resume.pdf...');
-      } else if (lower.includes('show')||lower.includes('display')||lower.includes('open ')||lower.includes('what')) {
-        const map={project:'projects',experience:'experience',skill:'skills',achievement:'achievements',contact:'contact',about:'about'};
-        const hit=Object.keys(map).find(k=>lower.includes(k));
-        if(hit){openWindow(map[hit]);termPrint(`[Opening ${map[hit]}...]`);}
-        else{termPrint(`<span class="t-err">${escHtml(main)}: command not found</span>`);termPrint(`Type <span class="t-cmd">help</span> for available commands.`);}
-      } else if (main==='sudo') {
-        if(lower.includes('rm')&&lower.includes('-rf')){document.body.style.animation='shake 0.5s';setTimeout(()=>document.body.style.animation='',500);termPrint('Nice try. But you cannot delete my portfolio. 😎');}
-        else{termPrint('[sudo] password for rajvansh: ');setTimeout(()=>termPrint('<span class="t-err">sudo: user rajvansh is not in the sudoers file. This incident will be reported.</span>'),900);}
-      } else if (!main) {
-        // empty
-      } else {
-        termPrint(`<span class="t-err">${escHtml(main)}: command not found</span>`);
-        termPrint(`Type <span class="t-cmd">help</span> for available commands.`);
+    /* rain falls, angled slightly by mouse */
+    [rain1, rain2].forEach(r => {
+      const p = r.geo.attributes.position.array;
+      for (let i=0;i<r.count;i++){
+        p[i*3+1] -= r.vel[i];
+        p[i*3]   += pmx * .06;
+        if (p[i*3+1] < -100) { p[i*3+1] = 100; p[i*3] = (Math.random()-.5)*260; }
       }
-    }
-
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('menubar-clock').textContent = now.toLocaleDateString('en-US', {
-        weekday: 'short', month: 'short', day: 'numeric'
-      }) + '  ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    document.querySelectorAll('.dock-item').forEach(item => {
-      item.addEventListener('click', () => {
-        item.classList.add('bouncing');
-        item.addEventListener('animationend', () => item.classList.remove('bouncing'), {once:true});
-        if (item.dataset.url) { window.open(item.dataset.url,'_blank'); return; }
-        const target = item.dataset.target;
-        if (target === 'resume') { openResume(); return; }
-        if (target) {
-          const win = document.getElementById('win-'+target);
-          if (win && win.classList.contains('open') && !win.dataset.minimised) { bringToFront(win); }
-          else { openWindow(target); }
-        }
-      });
+      r.geo.attributes.position.needsUpdate = true;
     });
 
-    function updateDockDot(id, active) {
-      const dot = document.getElementById('dot-'+id);
-      if (dot) dot.classList.toggle('active', active);
+    /* cinders rise + drift */
+    const cp = cGeo.attributes.position.array;
+    for (let i=0;i<N;i++){
+      cp[i*3+1] += cVel[i];
+      cp[i*3]   += Math.sin(t*.8 + i)*.01;
+      if (cp[i*3+1] > 90) cp[i*3+1] = -90;
     }
+    cGeo.attributes.position.needsUpdate = true;
 
-    function runBenchmark() {
-      termPrint('<span class="t-warn">RUNNING BENCHMARK...</span>');
-      const bar=document.createElement('div'); bar.className='term-line';
-      bar.innerHTML='░'.repeat(20)+' 0%';
-      document.getElementById('term-output').appendChild(bar);
-      document.getElementById('term-output').scrollTop=99999;
-      let p=0;
-      const fill=setInterval(()=>{
-        p=Math.min(p+Math.floor(Math.random()*8)+3,100);
-        const filled=Math.round(p/5);
-        bar.innerHTML=`<span class="t-good">${'▓'.repeat(filled)}</span>${'░'.repeat(20-filled)} ${p}%`;
-        document.getElementById('term-output').scrollTop=99999;
-        if(p>=100){clearInterval(fill);setTimeout(printBenchmarkTable,400);}
-      },120);
-    }
+    /* slow dolly + handheld breath (holds back until the gate opens) */
+    const targetZ = window.__entered ? (50 - scrollP * 120) : 150;
+    camera.position.z += (targetZ - camera.position.z) * .05;
+    camera.position.x += (pmx*2.6 - camera.position.x) * .03;
+    camera.position.y += (-pmy*1.8 + Math.sin(t*.35)*.4 - camera.position.y) * .03;
+    camera.lookAt(camera.position.x*.4, camera.position.y*.4, camera.position.z - 60);
 
-    function printBenchmarkTable() {
-      const rows=[
-        ['Voice AI Latency',               '46.0 s',    '2.8 s',    '▲ 93% faster'],
-        ['Deepfake Detection Accuracy',     '60%',       '99.8%',    '▲ +39.8pp'],
-        ['LLM Token Usage (per req)',       '512 tok',   '200 tok',  '▼ 60% leaner'],
-        ['TLS Overhead per Request',        '400 ms',    '0 ms',     '✓ eliminated'],
-        ['Concurrent LLM Agents Deployed',  '0',         '3',        '✓ and growing'],
-        ['CI/CD Pipeline',                  '❌ manual', '✓ Actions','✓ automated'],
-        ['Taekwondo Medals',                '0',         '4',        '✓ gold + silver'],
-      ];
-      const w=[33,14,14,20];
-      const line=(a,b,c,d)=>`│ ${a.padEnd(w[0])}│ ${b.padEnd(w[1])}│ ${c.padEnd(w[2])}│ ${d.padEnd(w[3])}│`;
-      const sep=(l,m,r)=>l+'─'.repeat(w[0]+2)+m+'─'.repeat(w[1]+2)+m+'─'.repeat(w[2]+2)+m+'─'.repeat(w[3]+2)+r;
-      termPrint('');
-      termPrint('<span class="t-cmd">'+sep('┌','┬','┐')+'</span>');
-      termPrint('<span class="t-cmd">'+line('METRIC','BASELINE ENG','RAJVANSH','DELTA')+'</span>');
-      termPrint('<span class="t-cmd">'+sep('├','┼','┤')+'</span>');
-      rows.forEach(r=>termPrint(line(r[0],r[1],`<span class="t-good">${r[2]}</span>`,`<span class="t-good">${r[3]}</span>`)));
-      termPrint('<span class="t-cmd">'+sep('├','┼','┤')+'</span>');
-      termPrint(line('OVERALL SCORE','41 / 100','<span class="t-good">847/100</span>','<span class="t-warn">[OVERFLOW]</span>'));
-      termPrint('<span class="t-cmd">'+sep('└','┴','┘')+'</span>');
-      termPrint(''); termPrint('<span class="t-good">VERDICT: hire immediately or competitors will.</span>'); termPrint('');
-    }
-
-    let _matrixBgInterval=null;
-    function startMatrixBg() {
-      const c=document.getElementById('matrix-bg');
-      c.width=window.innerWidth; c.height=window.innerHeight;
-      const ctx=c.getContext('2d'), cols=Math.floor(c.width/14), drops=Array(cols).fill(1);
-      const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
-      window._matrixRunning=true;
-      _matrixBgInterval=setInterval(()=>{
-        ctx.fillStyle='rgba(0,0,0,0.05)'; ctx.fillRect(0,0,c.width,c.height);
-        ctx.fillStyle='#00FF41'; ctx.font='14px monospace';
-        drops.forEach((y,i)=>{ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*14,y*14);if(y*14>c.height&&Math.random()>0.975)drops[i]=0;drops[i]++;});
-      },40);
-    }
-
-    function startHackerExit() {
-      const el=document.getElementById('hacker-exit'), ec=document.getElementById('exit-matrix');
-      ec.width=window.innerWidth; ec.height=window.innerHeight;
-      const ctx=ec.getContext('2d'), chars='01アイウエオカキクケコサシスセソ', cols=Math.floor(ec.width/20), drops=Array(cols).fill(1);
-      el.style.display='flex';
-      const iv=setInterval(()=>{
-        ctx.fillStyle='rgba(0,0,0,0.05)'; ctx.fillRect(0,0,ec.width,ec.height);
-        ctx.fillStyle='#00FF41'; ctx.font='20px monospace';
-        drops.forEach((y,i)=>{ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*20,y*20);if(y*20>ec.height&&Math.random()>0.975)drops[i]=0;drops[i]++;});
-      },50);
-      setTimeout(()=>{clearInterval(iv);el.style.display='none';termPrint('');termPrint('Welcome back... if you dare. 😈');termPrint('');},20000);
-    }
-  </script>
+    renderer.render(scene, camera);
+  });
+}
+</script>
 </body>
 </html>
