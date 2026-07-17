@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rajvansh Malhotra — An Engineer's Story</title>
-<meta name="description" content="Rajvansh Malhotra — machine learning engineer. A story told in seven chapters.">
+<title>Rajvansh Malhotra: An Engineer's Story</title>
+<meta name="description" content="Rajvansh Malhotra, machine learning engineer. A story told in seven chapters.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -117,10 +117,6 @@ body.has-video #vid-shade{display:block}
 .pro-label{font-size:10px;letter-spacing:.7em;color:var(--red);text-transform:uppercase;margin-bottom:6vh}
 .pro-text{font-family:var(--serif);font-size:clamp(21px,2.9vw,34px);line-height:1.85;max-width:32ch;color:var(--ink);text-align:center;font-style:italic}
 .pro-text b{color:var(--red-hi);font-weight:500}
-.ledger{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:clamp(28px,5vw,60px);text-align:center;margin-top:12vh;width:min(1100px,92vw)}
-.led-v{font-family:var(--display);font-size:clamp(40px,6vw,88px);line-height:1;color:var(--ink)}
-.led-v em{font-style:normal;color:var(--red)}
-.led-l{font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--faint);margin-top:13px}
 
 /* ── CHAPTERS ── */
 .chapter{position:relative;z-index:2}
@@ -140,6 +136,7 @@ body.has-video #vid-shade{display:block}
 .pg-k{font-size:10px;letter-spacing:.44em;color:var(--acc);text-transform:uppercase}
 .pg-stat{font-family:var(--display);font-size:clamp(52px,9vw,140px);color:var(--acc);line-height:.95;margin:3vh 0;text-shadow:0 0 60px color-mix(in srgb,var(--acc) 38%,transparent)}
 .pg-stat small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.34em;color:var(--faint);text-transform:uppercase;margin-top:14px;text-shadow:none}
+.pg-stat .strike{color:var(--faint);opacity:.45;text-decoration:line-through;text-shadow:none}
 .pg-story{font-family:var(--serif);font-size:clamp(19px,2.4vw,28px);line-height:1.8;color:var(--dim);max-width:46ch}
 .chapter.right .pg-story{margin-left:auto}
 .pg-story b{color:var(--ink);font-weight:500}
@@ -246,7 +243,7 @@ footer{position:relative;z-index:2;display:flex;justify-content:space-between;fl
     <span class="row"><span>Rajvansh</span></span>
     <span class="row"><span>Malhotra</span></span>
   </h1>
-  <p class="cover-s">An engineer happiest <em>deep inside a problem</em> — curious, open, and always reaching for <em>something greater</em>.</p>
+  <p class="cover-s">An engineer fueled by <em>curiosity</em>, obsessed with exploring <em>unconventional ideas</em> and bringing them to life.</p>
   <div class="cover-meta">Machine Learning Engineer · Delhi, India · NIT Kurukshetra</div>
   <div class="open-cue">Open</div>
 </header>
@@ -254,23 +251,17 @@ footer{position:relative;z-index:2;display:flex;justify-content:space-between;fl
 <!-- ════════ PROLOGUE ════════ -->
 <section id="prologue" data-mood="steel">
   <div class="pro-label rv">Prologue</div>
-  <p class="pro-text rv">I like to move in with a problem — take it apart piece by piece, and keep looking until an unexpected door opens. Seven chapters of that curiosity in action: <b>I am in love with this work.</b></p>
-  <div class="ledger">
-    <div class="rv"><div class="led-v">46<em>→</em>8<em>s</em></div><div class="led-l">Voice AI latency</div></div>
-    <div class="rv"><div class="led-v">Top <em>2.8%</em></div><div class="led-l">Amazon ML Challenge</div></div>
-    <div class="rv"><div class="led-v"><em>3</em> Agents</div><div class="led-l">Built from scratch</div></div>
-    <div class="rv"><div class="led-v"><em>300+</em></div><div class="led-l">Problems solved</div></div>
-  </div>
+  <p class="pro-text rv">I have always been drawn to problems that refuse to give up their answers easily. The joy is in the search, in the unexpected doors that open along the way. <b>Seven chapters of that curiosity in motion.</b></p>
 </section>
 
-<!-- ════════ CHAPTER I — CRIMSON ════════ -->
+<!-- ════════ CHAPTER I · CRIMSON ════════ -->
 <section class="chapter left" id="ch1" data-accent="crimson">
   <div class="ch-card" data-mood="crimson">
     <div class="ch-card-in">
       <div class="ch-roman">I</div>
       <div class="ch-label">Chapter One · Jul 2026</div>
       <h2 class="ch-name" data-split>The City</h2>
-      <p class="ch-line">— in which 298,443 violations confess where the traffic will break next</p>
+      <p class="ch-line">In which 298,443 violations confess where the traffic will break next</p>
       <div class="ch-orn">✦ ✦ ✦</div>
     </div>
   </div>
@@ -278,21 +269,21 @@ footer{position:relative;z-index:2;display:flex;justify-content:space-between;fl
     <div class="ch-page-in">
       <div class="pg-k rv">BLR Parking Intelligence · Flipkart Gridlock Hackathon</div>
       <div class="pg-stat rv">298,443<small>GPS records · fact-checked at zero perceived latency</small></div>
-      <p class="pg-story rv">Bengaluru's parking chaos, ranked by physics: LambdaRank labels grounded in kinematic-wave theory, hotspots matched across time by the Hungarian algorithm, answers streamed by Qwen3-8B over a hybrid RAG corpus — then judged by a <b>jury of three models</b> after the stream closed, so verification cost the listener nothing.</p>
+      <p class="pg-story rv">Bengaluru's parking chaos, ranked by physics: LambdaRank labels grounded in kinematic-wave theory, hotspots matched across time by the Hungarian algorithm, answers streamed by Qwen3-8B over a hybrid RAG corpus, then judged by a <b>jury of three models</b> after the stream closed, so verification cost the listener nothing.</p>
       <div class="pg-tags rv"><span class="tag">LightGBM</span><span class="tag">Hybrid RAG</span><span class="tag">Qwen3-8B</span><span class="tag">OSRM</span><span class="tag">RLHF Loop</span></div>
       <a class="pg-link rv" href="https://github.com/RajvanshMalhotra" target="_blank" rel="noopener">Read the source →</a>
     </div>
   </div>
 </section>
 
-<!-- ════════ CHAPTER II — STEEL ════════ -->
+<!-- ════════ CHAPTER II · STEEL ════════ -->
 <section class="chapter right" data-accent="steel">
   <div class="ch-card" data-mood="steel">
     <div class="ch-card-in">
       <div class="ch-roman">II</div>
       <div class="ch-label">Chapter Two · Jul 2026</div>
       <h2 class="ch-name" data-split>The Voice</h2>
-      <p class="ch-line">— in which thirty-three seconds are cut to five, in two tongues</p>
+      <p class="ch-line">In which thirty-three seconds are cut to five, in two tongues</p>
       <div class="ch-orn">✦ ✦ ✦</div>
     </div>
   </div>
@@ -300,21 +291,21 @@ footer{position:relative;z-index:2;display:flex;justify-content:space-between;fl
     <div class="ch-page-in">
       <div class="pg-k rv">Yojana AI · Bilingual Voice RAG</div>
       <div class="pg-stat rv">33s → &lt;5s<small>End-to-end · perceived audio 20s → ~2s</small></div>
-      <p class="pg-story rv">A voice that helps citizens find welfare schemes in Hindi or English. Three serial bottlenecks diagnosed and resolved: auxiliary calls rerouted to an 800-token-per-second model, four preprocessing calls collapsed into one, and <b>TTS fired per sentence as tokens arrived</b> — 2.82 seconds of combined wall time.</p>
+      <p class="pg-story rv">A voice that helps citizens find welfare schemes in Hindi or English. Three serial bottlenecks diagnosed and resolved: auxiliary calls rerouted to an 800-token-per-second model, four preprocessing calls collapsed into one, and <b>TTS fired per sentence as tokens arrived</b>, totaling 2.82 seconds of combined wall time.</p>
       <div class="pg-tags rv"><span class="tag">Groq</span><span class="tag">Streaming TTS</span><span class="tag">Firecrawl</span><span class="tag">Gemini 2.5</span></div>
       <a class="pg-link rv" href="https://github.com/RajvanshMalhotra" target="_blank" rel="noopener">Read the source →</a>
     </div>
   </div>
 </section>
 
-<!-- ════════ CHAPTER III — MONO ════════ -->
+<!-- ════════ CHAPTER III · MONO ════════ -->
 <section class="chapter left" data-accent="mono">
   <div class="ch-card" data-mood="mono">
     <div class="ch-card-in">
       <div class="ch-roman">III</div>
-      <div class="ch-label">Chapter Three · May 2026 · Rumik AI Hackathon — Top 50</div>
+      <div class="ch-label">Chapter Three · May 2026 · Rumik AI Hackathon · Top 50</div>
       <h2 class="ch-name" data-split>The Storm</h2>
-      <p class="ch-line">— in which twelve optimizations silence a forty-six second wait</p>
+      <p class="ch-line">In which twelve optimizations silence a forty-six second wait</p>
       <div class="ch-orn">✦ ✦ ✦</div>
     </div>
   </div>
@@ -322,21 +313,21 @@ footer{position:relative;z-index:2;display:flex;justify-content:space-between;fl
     <div class="ch-page-in">
       <div class="pg-k rv">Awaaz · Voice AI</div>
       <div class="pg-stat rv">46s → &lt;8s<small>First audio chunk · −60% output tokens</small></div>
-      <p class="pg-story rv">Profiled the whole pipeline and eliminated twelve bottlenecks, one by one. Inference decoupled from speaker identification, TLS handshakes erased by a persistent client, and the architecture rebuilt around <b>WebSocket streaming</b> — tokens flowing from LLM through live speech synthesis straight into the listener's ears.</p>
+      <p class="pg-story rv">Profiled the whole pipeline and eliminated twelve bottlenecks, one by one. Inference decoupled from speaker identification, TLS handshakes erased by a persistent client, and the architecture rebuilt around <b>WebSocket streaming</b>, tokens flowing from LLM through live speech synthesis straight into the listener's ears.</p>
       <div class="pg-tags rv"><span class="tag">asyncio</span><span class="tag">WebSocket</span><span class="tag">Sarvam STT</span><span class="tag">httpx</span></div>
       <a class="pg-link rv" href="https://github.com/RajvanshMalhotra" target="_blank" rel="noopener">Read the source →</a>
     </div>
   </div>
 </section>
 
-<!-- ════════ CHAPTER IV — CRIMSON ════════ -->
+<!-- ════════ CHAPTER IV · CRIMSON ════════ -->
 <section class="chapter right" data-accent="crimson">
   <div class="ch-card" data-mood="crimson">
     <div class="ch-card-in">
       <div class="ch-roman">IV</div>
       <div class="ch-label">Chapter Four · Mar 2026 · IEEE Research</div>
       <h2 class="ch-name" data-split>The Fire</h2>
-      <p class="ch-line">— in which physics is written into the loss, and burns on a five-dollar chip</p>
+      <p class="ch-line">In which physics is written into the loss, and burns on a five-dollar chip</p>
       <div class="ch-orn">✦ ✦ ✦</div>
     </div>
   </div>
@@ -344,21 +335,21 @@ footer{position:relative;z-index:2;display:flex;justify-content:space-between;fl
     <div class="ch-page-in">
       <div class="pg-k rv">Battery Health RPNN · Physics-Informed ML</div>
       <div class="pg-stat rv">0 Cloud<small>Real-time SOC/SOH · ESP32 · C++ TinyML</small></div>
-      <p class="pg-story rv">Coulomb-counting differential equations embedded directly into the training loss — data-driven MSE, an ODE residual by automatic differentiation, and hard boundaries pinning state-of-charge to reality. Then the whole network compressed into a <b>C++ TinyML engine</b>, running safety-critical diagnostics with no server in the loop.</p>
+      <p class="pg-story rv">Coulomb-counting differential equations embedded directly into the training loss: data-driven MSE, an ODE residual by automatic differentiation, and hard boundaries pinning state-of-charge to reality. Then the whole network compressed into a <b>C++ TinyML engine</b>, running safety-critical diagnostics with no server in the loop.</p>
       <div class="pg-tags rv"><span class="tag">PINN</span><span class="tag">PyTorch</span><span class="tag">ESP32</span><span class="tag">AdamW λ=0.1</span></div>
       <a class="pg-link rv" href="https://github.com/RajvanshMalhotra" target="_blank" rel="noopener">Read the source →</a>
     </div>
   </div>
 </section>
 
-<!-- ════════ CHAPTER V — STEEL ════════ -->
+<!-- ════════ CHAPTER V · STEEL ════════ -->
 <section class="chapter left" data-accent="steel">
   <div class="ch-card" data-mood="steel">
     <div class="ch-card-in">
       <div class="ch-roman">V</div>
       <div class="ch-label">Chapter Five · Feb 2026</div>
       <h2 class="ch-name" data-split>The Watchers</h2>
-      <p class="ch-line">— in which three agents keep vigil over the sky</p>
+      <p class="ch-line">In which three agents keep vigil over the sky</p>
       <div class="ch-orn">✦ ✦ ✦</div>
     </div>
   </div>
@@ -366,29 +357,29 @@ footer{position:relative;z-index:2;display:flex;justify-content:space-between;fl
     <div class="ch-page-in">
       <div class="pg-k rv">Gotham Orbital · Agentic Satellite Intelligence</div>
       <div class="pg-stat rv">3 Agents<small>ATLAS · ORBITAL-1 · ANALYST-1</small></div>
-      <p class="pg-story rv">A custom agentic library — optimum_ReAct — engineered from nothing, inspired by Palantir's Gotham. Its memory is hybrid: BM25, semantic search, and a <b>weighted knowledge graph</b> that forgets the way people do — by importance, recency, and connection. Deployed on AWS with Docker and full CI/CD.</p>
+      <p class="pg-story rv">A custom agentic library, optimum_ReAct, engineered from nothing and inspired by Palantir's Gotham. Its memory is hybrid: BM25, semantic search, and a <b>weighted knowledge graph</b> that forgets the way people do: by importance, recency, and connection. Deployed on AWS with Docker and full CI/CD.</p>
       <div class="pg-tags rv"><span class="tag">optimum_ReAct</span><span class="tag">BM25</span><span class="tag">Knowledge Graph</span><span class="tag">AWS EC2</span></div>
       <a class="pg-link rv" href="https://github.com/RajvanshMalhotra/optimum_ReAct" target="_blank" rel="noopener">Read the source →</a>
     </div>
   </div>
 </section>
 
-<!-- ════════ CHAPTER VI — MONO ════════ -->
+<!-- ════════ CHAPTER VI · MONO ════════ -->
 <section class="chapter right" data-accent="mono">
   <div class="ch-card" data-mood="mono">
     <div class="ch-card-in">
       <div class="ch-roman">VI</div>
       <div class="ch-label">Chapter Six · Jun 2025</div>
       <h2 class="ch-name" data-split>The Apprentice</h2>
-      <p class="ch-line">— in which a language model learns to speak on borrowed hardware</p>
+      <p class="ch-line">In which a language model learns to speak on borrowed hardware</p>
       <div class="ch-orn">✦ ✦ ✦</div>
     </div>
   </div>
   <div class="ch-page">
     <div class="ch-page-in">
       <div class="pg-k rv">Rizzler · LLM Fine-Tuning</div>
-      <div class="pg-stat rv">4-bit · r=64<small>QLoRA via Unsloth · q_proj / v_proj</small></div>
-      <p class="pg-story rv">Meta's LLaMA-3 8B, taught conversation on hardware that shouldn't allow it — <b>QLoRA with 4-bit quantization</b>, adapters on the attention projections, and generation tuned through temperature and top-p sweeps.</p>
+      <div class="pg-stat rv"><span class="strike">Riddler</span> Rizzler<small>4-bit QLoRA · r=64 · q_proj / v_proj · via Unsloth</small></div>
+      <p class="pg-story rv">Meta's LLaMA-3 8B, taught conversation on hardware that shouldn't allow it: <b>QLoRA with 4-bit quantization</b>, adapters on the attention projections, and generation tuned through temperature and top-p sweeps.</p>
       <div class="pg-tags rv"><span class="tag">LLaMA-3 8B</span><span class="tag">QLoRA</span><span class="tag">Unsloth</span></div>
       <a class="pg-link rv" href="https://github.com/RajvanshMalhotra/rizzler" target="_blank" rel="noopener">Access the weights →</a>
     </div>
@@ -401,37 +392,37 @@ footer{position:relative;z-index:2;display:flex;justify-content:space-between;fl
   <p class="int-en rv">Want something badly enough, and the universe conspires to deliver it</p>
 </div>
 
-<!-- ════════ CHAPTER VII — THE CROSSING ════════ -->
+<!-- ════════ CHAPTER VII · THE CROSSING ════════ -->
 <section class="chapter left" id="crossing" data-accent="crimson">
   <div class="ch-card" data-mood="crimson">
     <div class="ch-card-in">
       <div class="ch-roman">VII</div>
       <div class="ch-label">Chapter Seven</div>
       <h2 class="ch-name" data-split>The Crossing</h2>
-      <p class="ch-line">— in which the work leaves the lab and meets the world</p>
+      <p class="ch-line">In which the work leaves the lab and meets the world</p>
       <div class="ch-orn">✦ ✦ ✦</div>
     </div>
   </div>
   <div class="ch-page">
     <div style="width:100%">
       <article class="xp rv">
-        <div class="xp-when">Mar — May 2025</div>
+        <div class="xp-when">Mar-May 2025</div>
         <div>
           <h3 class="xp-role">AI/ML Intern</h3>
-          <p class="xp-org">Samvedya AI × AIIMS Delhi — RAG for clinical visual abstracts</p>
+          <p class="xp-org">Samvedya AI × AIIMS Delhi · RAG for clinical visual abstracts</p>
         </div>
         <div class="xp-fact">80%<small>Accuracy · MVP in 3 weeks</small></div>
       </article>
       <article class="xp rv">
-        <div class="xp-when">Jun — Dec 2024</div>
+        <div class="xp-when">Jun-Dec 2024</div>
         <div>
           <h3 class="xp-role">ML Research Intern</h3>
-          <p class="xp-org">NIT Kurukshetra — Vision Transformers, custom ANNs</p>
+          <p class="xp-org">NIT Kurukshetra · Vision Transformers, custom ANNs</p>
         </div>
         <div class="xp-fact">60→82%<small>ViT accuracy · SOTA custom ANN</small></div>
       </article>
       <article class="xp rv">
-        <div class="xp-when">2023 — 2027</div>
+        <div class="xp-when">2023-2027</div>
         <div>
           <h3 class="xp-role">B.Tech, Computer Engineering</h3>
           <p class="xp-org">National Institute of Technology, Kurukshetra</p>
@@ -449,7 +440,7 @@ footer{position:relative;z-index:2;display:flex;justify-content:space-between;fl
       <div class="ch-roman">✦</div>
       <div class="ch-label">Appendix</div>
       <h2 class="ch-name" data-split>The Record</h2>
-      <p class="ch-line">— what remains when the rain stops</p>
+      <p class="ch-line">What remains when the rain stops</p>
       <div class="ch-orn">✦ ✦ ✦</div>
     </div>
   </div>
@@ -473,7 +464,7 @@ footer{position:relative;z-index:2;display:flex;justify-content:space-between;fl
 <section id="epilogue" data-mood="crimson">
   <div class="ep-k rv">Epilogue · The Signal</div>
   <h2 class="ep-t rv">Let's<br><span class="ghosted">Build.</span></h2>
-  <p class="ep-s rv">Open to SDE, ML engineering, research &amp; agentic-AI roles. If your team measures in milliseconds — send the signal.</p>
+  <p class="ep-s rv">Open to SDE, ML engineering, research &amp; agentic-AI roles. If you're building something worth staying up for, send the signal.</p>
   <div class="ep-row rv">
     <a class="ep-btn pri" href="mailto:2004rajvnsh@gmail.com">Email</a>
     <a class="ep-btn" href="https://linkedin.com/in/rajvanshm1" target="_blank" rel="noopener">LinkedIn</a>
@@ -482,7 +473,7 @@ footer{position:relative;z-index:2;display:flex;justify-content:space-between;fl
   </div>
   <div class="ep-credits rv">
     <div><b>Written &amp; directed by</b> Rajvansh Malhotra</div>
-    <div><b>Shot on</b> PyTorch · <b>Scored in</b> Python</div>
+    <div><b>Shot on</b> Claude · <b>Scored in</b> Python</div>
   </div>
   <div class="fin rv">~ fin ~</div>
 </section>
@@ -514,7 +505,7 @@ document.querySelectorAll('[data-split]').forEach(el => {
     .map(w => `<span class="w"><i>${w}</i></span>`).join(' ');
 });
 
-/* ═══════════ THE RIDDLE GATE — typed invitation ═══════════ */
+/* ═══════════ THE RIDDLE GATE · typed invitation ═══════════ */
 const TYPE_TEXT = 'Click for the immersive experience';
 const typedEl = document.getElementById('typed');
 let ti = 0;
@@ -604,7 +595,7 @@ function fillMq(id, arr){
 fillMq('mq1', skills); fillMq('mq2', tools);
 
 /* ═══════════ BACKGROUND FILM + SOUND ═══════════
-   Drop your edit at ./assets/bg.mp4 — it autoplays muted (browser rule),
+   Drop your edit at ./assets/bg.mp4, it autoplays muted (browser rule),
    and the SOUND button unmutes the film's own audio with a fade.        */
 const bgv = document.getElementById('bgvid');
 let videoReady = false;
@@ -637,7 +628,7 @@ bgv.addEventListener('canplay', () => {
   videoReady = true;
   document.body.classList.add('has-video');
   console.log('[bg video] playing:', bgv.currentSrc || bgv.src);
-  bgv.muted = true; /* visuals only — sound comes from the audio player */
+  bgv.muted = true; /* visuals only, sound comes from the audio player */
   bgv.play().catch(() => {});
   if (!bga.src) bga.src = bgv.currentSrc || bgv.src;
 });
@@ -675,7 +666,7 @@ soundBtn.addEventListener('click', () => soundOn ? stopSound() : startSound());
 </script>
 
 <script type="module">
-/* ═══════════ THREE.JS — GOTHAM WEATHER ═══════════
+/* ═══════════ THREE.JS · GOTHAM WEATHER ═══════════
    Rain layers + red cinders, compositing over the film. */
 import * as THREE from 'three';
 
